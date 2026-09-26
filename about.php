@@ -54,6 +54,7 @@ ob_start();
 
     <!-- HERO SECTION -->
     <div class="about-hero text-center mb-5">
+        <h1>About Us......123</h1>
         <span class="badge bg-light text-success px-3 py-2 rounded-pill fw-bold mb-3">Green Tech Revolution</span>
         <h1 class="fw-bold mb-3">Renewing Tech, Restoring Nature</h1>
         <p class="lead mx-auto opacity-90" style="max-width: 700px;">
