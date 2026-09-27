@@ -1,10 +1,10 @@
 <?php
 $page_title = "Shopping Cart - Re-NewTech";
 
-// URL માંથી પ્રોડક્ટની ID આવે અથવા ડિફોલ્ટ કાર્ટ ડેટા
+
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 
-// ડમી ડેટાબેઝમાંથી પ્રોડક્ટ્સની યાદી
+
 $all_products = [
     1 => [
         'id' => 1,
@@ -30,19 +30,18 @@ $all_products = [
     ]
 ];
 
-// કાર્ટમાં રહેલી પ્રોડક્ટ્સ
+
 $cart_items = [
     $all_products[$product_id] ?? $all_products[1]
 ];
 
-// હિસાબ ગણતરી (Totals)
 $subtotal = 0;
 $total_co2 = 0;
 foreach ($cart_items as $item) {
     $subtotal += ($item['price'] * $item['qty']);
     $total_co2 += ($item['co2_saved'] * $item['qty']);
 }
-$shipping = 0; // ફ્રી ડિલિવરી
+$shipping = 0; 
 $grand_total = $subtotal + $shipping;
 
 ob_start();

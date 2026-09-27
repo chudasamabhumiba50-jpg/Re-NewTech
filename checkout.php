@@ -23,7 +23,11 @@ ob_start();
         --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
         --border-radius: 16px;
     }
-    body { background-color: var(--bg-light); }
+
+    body {
+        background-color: var(--bg-light);
+    }
+
     .checkout-card {
         background: #ffffff;
         border-radius: var(--border-radius);
@@ -31,12 +35,7 @@ ob_start();
         border: 1px solid rgba(0,0,0,0.06);
         box-shadow: var(--card-shadow);
     }
-    .payment-option-card {
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 16px;
-        cursor: pointer;
-    }
+
     .btn-place-order {
         background-color: var(--primary-color);
         color: #ffffff;
@@ -45,82 +44,144 @@ ob_start();
         font-weight: 600;
         border: none;
     }
+
+    .btn-place-order:hover {
+        background-color: #0b3d26;
+        color: #ffffff;
+    }
+
+    .demo-note {
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    .checkout-step-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        margin-bottom: 12px;
+        background: var(--teal-soft);
+        color: var(--teal-dark);
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 800;
+    }
 </style>
 
 <div class="container py-4">
-    <h3 class="fw-bold text-dark mb-4"><i class="bi bi-shield-lock-fill me-2 text-success"></i> Checkout</h3>
 
-    <form action="order_success.php" method="GET">
+    <div class="checkout-step-badge">
+        <i class="bi bi-1-circle-fill"></i> Step 1 of 2 — Shipping Details
+    </div>
+
+    <h3 class="fw-bold text-dark mb-4">
+        <i class="bi bi-shield-lock-fill me-2 text-success"></i>
+        Checkout
+    </h3>
+
+    <form id="checkoutForm" action="payment.php" method="get">
         <div class="row g-4">
+
+            <!-- Left Side -->
             <div class="col-lg-7">
-                <div class="checkout-card mb-4">
-                    <h5 class="fw-bold text-dark mb-3">1. Shipping Address</h5>
+
+                <!-- Shipping Address -->
+                <div class="checkout-card">
+                    <h5 class="fw-bold text-dark mb-3">Shipping Address</h5>
+
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Full Name</label>
-                            <input type="text" class="form-control" placeholder="Rahul Sharma" required>
+                            <input type="text" class="form-control"
+                                   placeholder="Enter your full name" required>
                         </div>
+
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+                            <input type="tel" class="form-control"
+                                   placeholder="+91 98765 43210" required>
                         </div>
+
                         <div class="col-12">
                             <label class="form-label small fw-semibold">Address</label>
-                            <input type="text" class="form-control" placeholder="123, Green Park, Main Road" required>
+                            <input type="text" class="form-control"
+                                   placeholder="House / Street / Area" required>
                         </div>
+
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">City</label>
-                            <input type="text" class="form-control" placeholder="Ahmedabad" required>
+                            <input type="text" class="form-control"
+                                   placeholder="Ahmedabad" required>
                         </div>
+
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Pincode</label>
-                            <input type="text" class="form-control" placeholder="380001" required>
+                            <input type="text" class="form-control"
+                                   placeholder="380001" maxlength="6" required>
                         </div>
                     </div>
-                </div>
 
-                <div class="checkout-card">
-                    <h5 class="fw-bold text-dark mb-3">2. Payment Method</h5>
-                    <div class="d-flex flex-column gap-3">
-                        <label class="payment-option-card d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center gap-3">
-                                <input type="radio" name="payment_method" value="upi" checked>
-                                <div>
-                                    <strong class="d-block text-dark">UPI / Google Pay / PhonePe</strong>
-                                </div>
-                            </div>
-                            <i class="bi bi-qr-code-scan fs-4 text-success"></i>
-                        </label>
-                        <label class="payment-option-card d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center gap-3">
-                                <input type="radio" name="payment_method" value="cod">
-                                <div>
-                                    <strong class="d-block text-dark">Cash on Delivery (COD)</strong>
-                                </div>
-                            </div>
-                            <i class="bi bi-cash-stack fs-4 text-warning"></i>
-                        </label>
-                    </div>
+                    <p class="demo-note mt-3 mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Payment method will be selected on the next step.
+                    </p>
                 </div>
             </div>
 
+            <!-- Right Side: Order Summary -->
             <div class="col-lg-5">
                 <div class="checkout-card">
                     <h5 class="fw-bold text-dark mb-3">Order Summary</h5>
+
                     <?php foreach($order_items as $item): ?>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold text-dark small"><?php echo $item['name']; ?></span>
-                            <span class="fw-bold text-dark small">₹<?php echo number_format($item['price']); ?></span>
+                            <span class="fw-semibold text-dark small">
+                                <?php echo $item['name']; ?>
+                                <span class="text-muted">× <?php echo $item['qty']; ?></span>
+                            </span>
+
+                            <span class="fw-bold text-dark small">
+                                ₹<?php echo number_format($item['price'] * $item['qty']); ?>
+                            </span>
                         </div>
                     <?php endforeach; ?>
+
                     <hr>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Subtotal</span>
+                        <span>₹<?php echo number_format($subtotal); ?></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Shipping</span>
+                        <span class="text-success">
+                            <?php echo $shipping == 0 ? 'Free' : '₹' . number_format($shipping); ?>
+                        </span>
+                    </div>
+
+                    <hr>
+
                     <div class="d-flex justify-content-between mb-4">
                         <span class="fs-5 fw-bold text-dark">Total</span>
-                        <span class="fs-4 fw-bold text-success">₹<?php echo number_format($grand_total); ?></span>
+                        <span class="fs-4 fw-bold text-success">
+                            ₹<?php echo number_format($grand_total); ?>
+                        </span>
                     </div>
-                    <button type="submit" class="btn btn-place-order w-100">Place Order Now</button>
+
+                    <button type="submit" class="btn btn-place-order w-100">
+                        Continue to Payment
+                        <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+
+                    <p class="text-muted small text-center mt-3 mb-0">
+                        <i class="bi bi-shield-check me-1"></i>
+                        Secure checkout demo
+                    </p>
                 </div>
             </div>
+
         </div>
     </form>
 </div>
