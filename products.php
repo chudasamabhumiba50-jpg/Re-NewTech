@@ -1,7 +1,7 @@
 <?php
 $page_title = "Explore Re-NewTech  Catalog - Re-NewTech  Management";
 
-// Frontend ટેસ્ટિંગ માટેનો Dummy Data Array (No Database Connection Needed)
+// Dummy data array for frontend testing (No database connection needed)
 $products = [
     [
         'id' => 1,
@@ -15,7 +15,7 @@ $products = [
         'rating' => 4.8,
         'reviews_count' => 34,
         'co2_saved' => '140kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80'
     ],
     [
         'id' => 2,
@@ -29,7 +29,7 @@ $products = [
         'rating' => 4.5,
         'reviews_count' => 89,
         'co2_saved' => '70kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80'
     ],
     [
         'id' => 3,
@@ -43,7 +43,7 @@ $products = [
         'rating' => 4.2,
         'reviews_count' => 12,
         'co2_saved' => '25kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&q=80'
     ],
     [
         'id' => 4,
@@ -57,7 +57,7 @@ $products = [
         'rating' => 3.9,
         'reviews_count' => 5,
         'co2_saved' => '8kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80'
     ],
     [
         'id' => 5,
@@ -71,7 +71,7 @@ $products = [
         'rating' => 4.9,
         'reviews_count' => 45,
         'co2_saved' => '12kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1544652478-6653e09f18a2?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1544652478-6653e09f18a2?w=600&q=80'
     ],
     [
         'id' => 6,
@@ -85,360 +85,632 @@ $products = [
         'rating' => 4.6,
         'reviews_count' => 21,
         'co2_saved' => '45kg CO2',
-        'image_url' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80'
+        'image_url' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&q=80'
     ]
 ];
 
 ob_start();
 ?>
 
-<!-- Custom Frontend Styling -->
 <style>
-    :root {
-        --primary-color: #0f5132;
-        --primary-hover: #0b3d26;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        --hover-shadow: 0 15px 30px rgba(0,0,0,0.12);
-        --border-radius: 16px;
+    .pc-page {
+        background: var(--cream);
+        padding: 34px 0 70px;
     }
 
-    body {
-        background-color: var(--bg-light);
+    /* ===== HEADER STRIP ===== */
+    .pc-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+        padding-bottom: 22px;
+        margin-bottom: 26px;
+        border-bottom: 1px solid var(--line);
     }
 
-    /* Page Header Banner */
-    .catalog-header {
-        background: linear-gradient(135deg, #134e4a 0%, #064e3b 100%);
-        border-radius: var(--border-radius);
-        padding: 30px;
-        color: #ffffff;
-        margin-bottom: 25px;
+    .pc-header h1 {
+        margin: 0 0 6px;
+        color: var(--navy);
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.8px;
     }
 
-    /* Filter Sidebar */
-    .filter-card-modern {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 24px;
-        border: 1px solid rgba(0,0,0,0.05);
-        box-shadow: var(--card-shadow);
+    .pc-header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        max-width: 480px;
     }
 
-    .filter-section-title {
-        font-weight: 700;
-        font-size: 0.85rem;
+    .pc-stat-group {
+        display: flex;
+        gap: 26px;
+    }
+
+    .pc-stat {
+        text-align: right;
+    }
+
+    .pc-stat strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .pc-stat span {
+        color: var(--muted);
+        font-size: 0.68rem;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: #6c757d;
-        margin-bottom: 12px;
+        letter-spacing: 0.5px;
     }
 
-    /* Custom Radio Controls */
-    .custom-filter-item {
-        margin-bottom: 8px;
-    }
-    
-    .custom-filter-item .form-check-input:checked {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
+    /* ===== TOOLBAR ===== */
+    .pc-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 22px;
     }
 
-    /* Product Card */
-    .modern-product-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: var(--card-shadow);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    .pc-search {
         position: relative;
+        flex: 1;
+        min-width: 220px;
+        max-width: 400px;
+    }
+
+    .pc-search i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    .pc-search input {
+        width: 100%;
+        padding: 11px 14px 11px 38px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--white);
+        font-size: 0.84rem;
+        outline: none;
+        transition: 0.2s ease;
+    }
+
+    .pc-search input:focus {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px rgba(30, 201, 186, 0.12);
+    }
+
+    .pc-sort {
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--white);
+        color: var(--text);
+        font-size: 0.8rem;
+        outline: none;
+    }
+
+    .pc-result-text {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 0.78rem;
+    }
+
+    .pc-result-text strong {
+        color: var(--text);
+    }
+
+    /* ===== FILTER CHIPS ===== */
+    .pc-filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .pc-filter-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 5px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+    }
+
+    .pc-chip {
+        padding: 7px 13px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        background: none;
+        white-space: nowrap;
+        transition: 0.15s ease;
+    }
+
+    .pc-chip:hover {
+        color: var(--navy);
+    }
+
+    .pc-chip.is-active {
+        background: var(--navy);
+        color: var(--white);
+    }
+
+    .pc-budget {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 15px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    .pc-budget input[type="range"] {
+        width: 130px;
+        accent-color: var(--teal-dark);
+    }
+
+    .pc-budget strong {
+        color: var(--text);
+    }
+
+    .pc-reset {
+        color: var(--teal-dark);
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    .pc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+        gap: 22px;
+    }
+
+    .pc-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        transition: border-color 0.25s ease, transform 0.25s ease;
     }
 
-    .modern-product-card:hover {
-        transform: translateY(-7px);
-        box-shadow: var(--hover-shadow);
+    .pc-card:hover {
+        border-color: var(--teal);
+        transform: translateY(-3px);
     }
 
-    /* Card Image Container */
-    .card-img-wrapper {
+    .pc-card-img {
         position: relative;
-        height: 200px;
+        height: 178px;
+        background: #f2f4f5;
         overflow: hidden;
-        background-color: #f8f9fa;
     }
 
-    .card-img-wrapper img {
+    .pc-card-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s ease;
     }
 
-    .modern-product-card:hover .card-img-wrapper img {
-        transform: scale(1.08);
+    .pc-card:hover .pc-card-img img {
+        transform: scale(1.06);
     }
 
-    /* Wishlist Floating Button */
-    .wishlist-floating-btn {
+    .pc-wish-btn {
         position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(4px);
+        top: 10px;
+        right: 10px;
+        width: 33px;
+        height: 33px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #333;
-        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--navy);
+        border-radius: 50%;
         text-decoration: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        font-size: 0.85rem;
     }
 
-    .wishlist-floating-btn:hover {
-        background: #ffffff;
-        color: #dc3545;
-        transform: scale(1.1);
+    .pc-wish-btn:hover {
+        background: var(--navy);
+        color: var(--white);
     }
 
-    /* Eco & Condition Badges */
-    .badge-eco {
-        background-color: #e6f4ea;
-        color: #137333;
-        font-weight: 600;
-        font-size: 0.75rem;
-        padding: 4px 10px;
-        border-radius: 20px;
-    }
-
-    .badge-condition {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 4px 8px;
+    .pc-eco-tag {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        padding: 4px 9px;
+        background: rgba(11, 18, 32, 0.78);
+        color: #a9f2ea;
         border-radius: 6px;
+        font-size: 0.63rem;
+        font-weight: 700;
     }
 
-    .badge-like-new { background-color: #e0f2fe; color: #0369a1; }
-    .badge-good { background-color: #dcfce7; color: #15803d; }
-    .badge-refurbished { background-color: #fef3c7; color: #b45309; }
-    .badge-parts { background-color: #fee2e2; color: #b91c1c; }
+    .pc-card-body {
+        padding: 15px 16px 17px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
 
-    /* Buttons */
-    .btn-custom-cart {
-        background-color: var(--primary-color);
-        color: #fff;
-        border-radius: 10px;
-        padding: 7px 12px;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        border: none;
+    .pc-card-cat {
+        color: var(--violet);
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        margin-bottom: 5px;
+    }
+
+    .pc-card-name {
+        margin: 0 0 6px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        font-weight: 700;
+        min-height: 38px;
+    }
+
+    .pc-card-name a {
+        color: var(--text);
         text-decoration: none;
     }
 
-    .btn-custom-cart:hover {
-        background-color: var(--primary-hover);
-        color: #fff;
-        transform: scale(1.03);
+    .pc-card-name a:hover {
+        color: var(--teal-dark);
     }
 
-    .btn-custom-view {
-        background-color: #f1f5f9;
-        color: #475569;
-        border-radius: 10px;
-        padding: 7px 12px;
-        border: none;
-        transition: all 0.2s ease;
+    .pc-card-specs {
+        color: var(--muted);
+        font-size: 0.68rem;
+        margin-bottom: 10px;
+        min-height: 17px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .pc-card-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 12px;
+        font-size: 0.72rem;
+        color: var(--muted);
+    }
+
+    .pc-card-rating i {
+        color: #e9a91f;
+    }
+
+    .pc-card-rating strong {
+        color: var(--text);
+    }
+
+    .pc-card-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+    }
+
+    .pc-price-wrap strong {
+        display: block;
+        color: var(--text);
+        font-size: 1.12rem;
+        font-weight: 900;
+    }
+
+    .pc-price-wrap span {
+        color: #a3aab5;
+        font-size: 0.68rem;
+        text-decoration: line-through;
+    }
+
+    .pc-cart-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 13px;
+        background: var(--teal);
+        color: var(--white);
+        border-radius: 9px;
+        font-size: 0.72rem;
+        font-weight: 800;
         text-decoration: none;
+        transition: 0.2s ease;
     }
 
-    .btn-custom-view:hover {
-        background-color: #e2e8f0;
-        color: #0f172a;
+    .pc-cart-btn:hover {
+        background: var(--teal-dark);
+        color: var(--white);
+    }
+
+    /* ===== NO RESULTS ===== */
+    .pc-empty {
+        display: none;
+        padding: 65px 20px;
+        text-align: center;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+    }
+
+    @media (max-width: 767px) {
+        .pc-header { align-items: flex-start; flex-direction: column; }
+        .pc-stat-group { gap: 18px; }
+        .pc-result-text { margin-left: 0; width: 100%; order: 3; }
     }
 </style>
 
-<div class="container py-4">
+<div class="pc-page">
+<div class="container">
 
-    <!-- BREADCRUMB -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-3 small">
-            <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-success fw-semibold">Home</a></li>
-            <li class="breadcrumb-item active text-muted" aria-current="page">Re-NewTech Catalog</li>
-        </ol>
-    </nav>
-
-    <!-- HEADER BANNER -->
-    <div class="catalog-header d-flex flex-wrap align-items-center justify-content-between gap-3 shadow-sm">
+    <!-- HEADER -->
+    <div class="pc-header">
         <div>
-            <h2 class="fw-bold mb-1">♻️ Certified Re-NewTech Inventory</h2>
-            <p class="mb-0 text-white-50 small">Browse tested second-life tech, save money, and reduce Re-NewTech.</p>
+            <h1>Re-NewTech Catalog</h1>
+            <p>Tested, certified second-life electronics — every listing inspected before it reaches you.</p>
         </div>
-        <div>
-            <span class="badge bg-white text-dark px-3 py-2 rounded-pill fw-normal">
-                🌱 <strong><?php echo count($products); ?></strong> Active Items
-            </span>
+
+        <div class="pc-stat-group">
+            <div class="pc-stat">
+                <strong id="itemCountBadge"><?php echo count($products); ?></strong>
+                <span>Listings</span>
+            </div>
+            <div class="pc-stat">
+                <strong>320kg</strong>
+                <span>CO2 Saved</span>
+            </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT GRID -->
-    <div class="row g-4">
+    <!-- SEARCH + SORT -->
+    <div class="pc-toolbar">
 
-        <!-- FILTER SIDEBAR -->
-        <div class="col-lg-3">
-            <div class="filter-card-modern sticky-top" style="top: 20px;">
-                
-                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-sliders me-2"></i>Filters</h6>
-                    <a href="#" class="text-decoration-none small text-success fw-semibold">Reset All</a>
-                </div>
-
-                <!-- CATEGORY FILTER -->
-                <div class="mb-4">
-                    <div class="filter-section-title">Category</div>
-                    <?php 
-                    $categories = ['All Categories', 'Laptops', 'Smartphones', 'Components', 'Audio', 'Storage'];
-                    foreach($categories as $index => $cat): 
-                    ?>
-                        <div class="form-check custom-filter-item">
-                            <input class="form-check-input" type="radio" name="category_demo" id="cat_<?php echo $index; ?>" <?php echo $index === 0 ? 'checked' : ''; ?>>
-                            <label class="form-check-label small text-secondary" for="cat_<?php echo $index; ?>">
-                                <?php echo $cat; ?>
-                            </label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- CONDITION FILTER -->
-                <div class="mb-4">
-                    <div class="filter-section-title">Condition</div>
-                    <?php 
-                    $conditions = ['All Conditions', 'Like New', 'Good', 'Refurbished', 'Parts Only'];
-                    foreach($conditions as $index => $cond): 
-                    ?>
-                        <div class="form-check custom-filter-item">
-                            <input class="form-check-input" type="radio" name="condition_demo" id="cond_<?php echo $index; ?>" <?php echo $index === 0 ? 'checked' : ''; ?>>
-                            <label class="form-check-label small text-secondary" for="cond_<?php echo $index; ?>">
-                                <?php echo $cond; ?>
-                            </label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- PRICE SLIDER -->
-                <div class="mb-4">
-                    <div class="filter-section-title">Max Budget</div>
-                    <div class="d-flex justify-content-between text-dark fw-bold mb-1">
-                        <span class="small">₹500</span>
-                        <span class="small text-success">₹30,000</span>
-                    </div>
-                    <input type="range" class="form-range" min="500" max="50000" value="30000">
-                </div>
-
-                <!-- ECO STATS SIDE BANNER -->
-                <div class="p-3 bg-light rounded-3 text-center border">
-                    <div class="fs-4 mb-1">🌍</div>
-                    <h6 class="fw-bold small mb-1">Eco-Friendly Tech</h6>
-                    <p class="text-muted mb-0" style="font-size: 0.72rem;">
-                        Buying reused tech saves manufacturing energy & carbon footprint.
-                    </p>
-                </div>
-
-            </div>
+        <div class="pc-search">
+            <i class="bi bi-search"></i>
+            <input type="text" id="productSearchInput" placeholder="Search by name, category or specs...">
         </div>
 
-        <!-- PRODUCT LIST AREA -->
-        <div class="col-lg-9">
+        <select class="pc-sort" id="sortSelect">
+            <option value="featured">Sort: Featured</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+        </select>
 
-            <!-- SORTING BAR -->
-            <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-3 shadow-sm border">
-                <span class="text-muted small">Showing <strong><?php echo count($products); ?></strong> items</span>
-                
-                <div class="d-flex align-items-center gap-2">
-                    <select class="form-select form-select-sm border-0 bg-light" style="width: auto; cursor: pointer;">
-                        <option value="featured">Sort by: Featured</option>
-                        <option value="low">Price: Low to High</option>
-                        <option value="high">Price: High to Low</option>
-                    </select>
-                </div>
-            </div>
+        <span class="pc-result-text">Showing <strong id="visibleCountText"><?php echo count($products); ?></strong> items</span>
+    </div>
 
-            <!-- PRODUCT CARDS -->
-            <div class="row g-4">
-                <?php foreach ($products as $p): ?>
-                    <div class="col-md-6 col-xl-4">
-                        <div class="modern-product-card">
-                            
-                            <!-- IMAGE & WISHLIST -->
-                            <div class="card-img-wrapper">
-                                <img src="<?php echo $p['image_url']; ?>" alt="<?php echo $p['name']; ?>">
-                                <a href="#" class="wishlist-floating-btn" title="Add to Wishlist">
-                                    <i class="bi bi-heart"></i>
-                                </a>
-                            </div>
+    <!-- FILTER CHIPS -->
+    <div class="pc-filter-row">
 
-                            <!-- CARD BODY -->
-                            <div class="p-3 d-flex flex-column flex-grow-1">
-                                
-                                <!-- BADGES -->
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge-condition <?php echo $p['condition_badge']; ?>">
-                                        <?php echo $p['condition_text']; ?>
-                                    </span>
-                                    <span class="badge-eco">🌱 <?php echo $p['co2_saved']; ?></span>
-                                </div>
-
-                                <!-- TITLE -->
-                                <h6 class="fw-bold text-dark mb-1 text-truncate">
-                                    <a href="#" class="text-dark text-decoration-none">
-                                        <?php echo $p['name']; ?>
-                                    </a>
-                                </h6>
-
-                                <!-- SPECS -->
-                                <p class="text-muted small mb-2 text-truncate" title="<?php echo $p['specs']; ?>">
-                                    <?php echo $p['specs']; ?>
-                                </p>
-
-                                <!-- RATING -->
-                                <div class="d-flex align-items-center gap-1 small text-warning mb-3">
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="fw-bold text-dark ms-1"><?php echo $p['rating']; ?></span>
-                                    <span class="text-muted small">(<?php echo $p['reviews_count']; ?>)</span>
-                                </div>
-
-                                <!-- PRICE & FOOTER BUTTONS -->
-                                <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
-                                    <div>
-                                        <div class="fs-5 fw-bold text-dark">₹<?php echo number_format($p['price']); ?></div>
-                                        <div class="text-muted text-decoration-line-through small" style="font-size: 0.75rem;">₹<?php echo number_format($p['original_price']); ?></div>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <a href="product_details.php?id=<?php echo $p['id']; ?>" class="btn btn-custom-view btn-sm" title="View Details">
-    <i class="bi bi-eye"></i>
-</a>
-                                        <a href="#" class="btn btn-custom-cart btn-sm">
-                                            <i class="bi bi-bag-plus me-1"></i> Add
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
+        <div class="pc-filter-group" id="categoryChipGroup">
+            <?php
+            $categories = ['All Categories', 'Laptops', 'Smartphones', 'Components', 'Audio', 'Storage'];
+            foreach ($categories as $index => $cat):
+            ?>
+                <button type="button" class="pc-chip <?php echo $index === 0 ? 'is-active' : ''; ?>" data-value="<?php echo $cat; ?>"><?php echo $cat; ?></button>
+            <?php endforeach; ?>
         </div>
+
+        <div class="pc-filter-group" id="conditionChipGroup">
+            <?php
+            $conditions = ['All Conditions', 'Like New', 'Good Condition', 'Refurbished', 'For Parts'];
+            foreach ($conditions as $index => $cond):
+            ?>
+                <button type="button" class="pc-chip <?php echo $index === 0 ? 'is-active' : ''; ?>" data-value="<?php echo $cond; ?>"><?php echo $cond; ?></button>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="pc-budget">
+            <span>Max</span>
+            <input type="range" id="priceRangeInput" min="500" max="65000" value="65000">
+            <strong id="priceRangeLabel">₹65,000</strong>
+        </div>
+
+        <button type="button" class="pc-reset" id="resetFiltersBtn">Reset</button>
 
     </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="pc-grid" id="productGrid">
+
+        <?php foreach ($products as $p): ?>
+            <div class="pc-card product-item"
+                 data-name="<?php echo strtolower($p['name']); ?>"
+                 data-category="<?php echo $p['category']; ?>"
+                 data-condition="<?php echo $p['condition_text']; ?>"
+                 data-specs="<?php echo strtolower($p['specs']); ?>"
+                 data-price="<?php echo $p['price']; ?>">
+
+                <div class="pc-card-img">
+                    <img src="<?php echo $p['image_url']; ?>" alt="<?php echo $p['name']; ?>">
+                    <a href="#" class="pc-wish-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></a>
+                    <span class="pc-eco-tag">🌱 <?php echo $p['co2_saved']; ?></span>
+                </div>
+
+                <div class="pc-card-body">
+
+                    <div class="pc-card-cat"><?php echo strtoupper($p['category']); ?></div>
+
+                    <h3 class="pc-card-name">
+                        <a href="product_details.php?id=<?php echo $p['id']; ?>"><?php echo $p['name']; ?></a>
+                    </h3>
+
+                    <div class="pc-card-specs" title="<?php echo $p['specs']; ?>"><?php echo $p['specs']; ?></div>
+
+                    <div class="pc-card-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <strong><?php echo $p['rating']; ?></strong>
+                        <span>(<?php echo $p['reviews_count']; ?>) · <?php echo $p['condition_text']; ?></span>
+                    </div>
+
+                    <div class="pc-card-foot">
+                        <div class="pc-price-wrap">
+                            <strong>₹<?php echo number_format($p['price']); ?></strong>
+                            <span>₹<?php echo number_format($p['original_price']); ?></span>
+                        </div>
+
+                        <a href="#" class="pc-cart-btn"><i class="bi bi-bag-plus"></i> Add</a>
+                    </div>
+
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+    <!-- NO RESULTS -->
+    <div class="pc-empty" id="noResultsBox">
+        <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+        <h5 class="fw-bold text-dark">No products found</h5>
+        <p class="text-muted small mb-0">Try adjusting your search or filters.</p>
+    </div>
+
 </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('productSearchInput');
+    const categoryChips = document.querySelectorAll('#categoryChipGroup .pc-chip');
+    const conditionChips = document.querySelectorAll('#conditionChipGroup .pc-chip');
+    const priceRangeInput = document.getElementById('priceRangeInput');
+    const priceRangeLabel = document.getElementById('priceRangeLabel');
+    const sortSelect = document.getElementById('sortSelect');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+
+    const productGrid = document.getElementById('productGrid');
+    const productItems = Array.from(document.querySelectorAll('.product-item'));
+    const noResultsBox = document.getElementById('noResultsBox');
+    const visibleCountText = document.getElementById('visibleCountText');
+
+    let activeCategory = 'All Categories';
+    let activeCondition = 'All Conditions';
+
+    function setActiveChip(chipList, chip, valueSetter) {
+        chipList.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        valueSetter(chip.dataset.value);
+        applyFilters();
+    }
+
+    categoryChips.forEach(chip => {
+        chip.addEventListener('click', () => setActiveChip(categoryChips, chip, v => activeCategory = v));
+    });
+
+    conditionChips.forEach(chip => {
+        chip.addEventListener('click', () => setActiveChip(conditionChips, chip, v => activeCondition = v));
+    });
+
+    function applyFilters() {
+
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const maxPrice = parseInt(priceRangeInput.value);
+        let visibleCount = 0;
+
+        productItems.forEach(function (item) {
+
+            const name = item.dataset.name;
+            const specs = item.dataset.specs;
+            const category = item.dataset.category;
+            const condition = item.dataset.condition;
+            const price = parseInt(item.dataset.price);
+
+            const matchesSearch = searchTerm === '' || name.includes(searchTerm) || specs.includes(searchTerm) || category.toLowerCase().includes(searchTerm);
+            const matchesCategory = activeCategory === 'All Categories' || category === activeCategory;
+            const matchesCondition = activeCondition === 'All Conditions' || condition === activeCondition;
+            const matchesPrice = price <= maxPrice;
+
+            if (matchesSearch && matchesCategory && matchesCondition && matchesPrice) {
+                item.style.display = '';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        visibleCountText.textContent = visibleCount;
+        noResultsBox.style.display = visibleCount === 0 ? 'block' : 'none';
+        productGrid.style.display = visibleCount === 0 ? 'none' : 'grid';
+    }
+
+    function applySort() {
+
+        const sortValue = sortSelect.value;
+        const sortedItems = productItems.slice();
+
+        if (sortValue === 'low') {
+            sortedItems.sort((a, b) => parseInt(a.dataset.price) - parseInt(b.dataset.price));
+        } else if (sortValue === 'high') {
+            sortedItems.sort((a, b) => parseInt(b.dataset.price) - parseInt(a.dataset.price));
+        }
+
+        sortedItems.forEach(item => productGrid.appendChild(item));
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    priceRangeInput.addEventListener('input', function () {
+        priceRangeLabel.textContent = '₹' + parseInt(this.value).toLocaleString('en-IN');
+        applyFilters();
+    });
+
+    sortSelect.addEventListener('change', function () {
+        applySort();
+        applyFilters();
+    });
+
+    resetFiltersBtn.addEventListener('click', function () {
+
+        searchInput.value = '';
+
+        categoryChips.forEach(c => c.classList.remove('is-active'));
+        categoryChips[0].classList.add('is-active');
+        activeCategory = 'All Categories';
+
+        conditionChips.forEach(c => c.classList.remove('is-active'));
+        conditionChips[0].classList.add('is-active');
+        activeCondition = 'All Conditions';
+
+        priceRangeInput.value = 65000;
+        priceRangeLabel.textContent = '₹65,000';
+        sortSelect.value = 'featured';
+
+        applySort();
+        applyFilters();
+    });
+</script>
 
 <?php
 $page_content = ob_get_clean();

@@ -144,57 +144,74 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <!-- RIGHT ACTIONS -->
 
-            <div class="navbar-actions">
+           <div class="navbar-actions">
 
-                <a
-                    href="products.php"
-                    class="nav-icon-button"
-                    title="Search"
-                >
+    <a href="products.php" class="nav-icon-button" title="Search">
+        <i class="bi bi-search"></i>
+    </a>
 
-                    <i class="bi bi-search"></i>
+    <a href="wishlist.php" class="nav-icon-button <?php echo ($current_page == 'wishlist.php') ? 'active-icon' : ''; ?>" title="Wishlist">
+        <i class="bi bi-heart"></i>
+    </a>
 
+    <a href="cart.php" class="nav-icon-button <?php echo ($current_page == 'cart.php' || $current_page == 'checkout.php') ? 'active-icon' : ''; ?>" title="Cart">
+        <i class="bi bi-bag"></i>
+    </a>
+
+    <div class="dropdown">
+
+        <button type="button" id="accountDropdown" class="nav-icon-button account-toggle-btn <?php echo ($current_page == 'orders.php') ? 'active-icon' : ''; ?>" data-bs-toggle="dropdown" aria-expanded="false" title="Account">
+            <i class="bi bi-person"></i>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end account-dropdown-menu" aria-labelledby="accountDropdown">
+
+            <li>
+                <a class="dropdown-item" href="orders.php">
+                    <i class="bi bi-bag-check me-2"></i> My Orders
                 </a>
+            </li>
 
-
-                <a
-                    href="wishlist.php"
-                    class="nav-icon-button <?php echo ($current_page == 'wishlist.php') ? 'active-icon' : ''; ?>"
-                    title="Wishlist"
-                >
-
-                    <i class="bi bi-heart"></i>
-
+            <li>
+                <a class="dropdown-item" href="wishlist.php">
+                    <i class="bi bi-heart me-2"></i> My Wishlist
                 </a>
+            </li>
 
+            <li>
+                <hr class="dropdown-divider">
+            </li>
 
-                <a
-                    href="cart.php"
-                    class="nav-icon-button <?php echo ($current_page == 'cart.php' || $current_page == 'checkout.php') ? 'active-icon' : ''; ?>"
-                    title="Cart"
-                >
-
-                    <i class="bi bi-bag"></i>
-
+            <li>
+                <a class="dropdown-item" href="login.php">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
                 </a>
+            </li>
 
-
-                <a
-                    href="login.php"
-                    class="btn btn-nav-login"
-                >
-                    Login
+            <li>
+                <a class="dropdown-item" href="register.php">
+                    <i class="bi bi-person-plus me-2"></i> Register
                 </a>
+            </li>
+             <li>
+        <a class="dropdown-item" href="logout.php">
+            <i class="bi bi-box-arrow-right me-2"></i> Logout
+        </a>
+    </li>
 
+        </ul>
 
-                <a
-                    href="register.php"
-                    class="btn btn-nav-register"
-                >
-                    Register
-                </a>
+    </div>
 
-            </div>
+    <a href="login.php" class="btn btn-nav-login">
+        Login
+    </a>
+
+    <a href="register.php" class="btn btn-nav-register">
+        Register
+    </a>
+
+</div>
 
         </div>
 
@@ -312,6 +329,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             Cart
                         </a>
                     </li>
+                    
 
                 </ul>
 

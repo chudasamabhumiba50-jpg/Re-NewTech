@@ -255,6 +255,109 @@ img {
 
 }
 
+/* =====================================================
+   ACCOUNT DROPDOWN
+===================================================== */
+
+.account-toggle-btn {
+
+    background: white;
+
+    border: 1px solid var(--line);
+
+    cursor: pointer;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+}
+
+.account-toggle-btn:hover {
+
+    color: var(--teal-dark);
+
+    border-color: #bfe5e1;
+
+    background: var(--teal-soft);
+
+}
+
+.account-toggle-btn:focus {
+
+    outline: none;
+
+    box-shadow: none;
+
+}
+
+.account-toggle-btn::after {
+
+    display: none;
+
+}
+
+.account-dropdown-menu {
+
+    min-width: 195px;
+
+    padding: 8px;
+
+    margin-top: 12px !important;
+
+    background: white;
+
+    border: 1px solid var(--line);
+
+    border-radius: 12px;
+
+    box-shadow: var(--shadow);
+
+}
+
+.account-dropdown-menu .dropdown-item {
+
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    color: var(--text);
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+
+}
+
+.account-dropdown-menu .dropdown-item:hover {
+
+    background: var(--teal-soft);
+
+    color: var(--teal-dark);
+
+}
+
+.account-dropdown-menu .dropdown-item i {
+
+    color: var(--muted);
+
+}
+
+.account-dropdown-menu .dropdown-item:hover i {
+
+    color: var(--teal-dark);
+
+}
+
+.account-dropdown-menu .dropdown-divider {
+
+    margin: 6px 0;
+
+    border-color: var(--line);
+
+}
 
 /* =====================================================
    HERO
@@ -2784,4 +2887,46 @@ img {
     display: flex !important;
     gap: 10px !important;
     margin-top: auto !important;
+}
+
+/* =====================================================
+   SHARED CONDITION BADGES (products.php & product_details.php)
+===================================================== */
+
+.badge-condition {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.badge-eco {
+    display: inline-block;
+    background-color: var(--teal-soft);
+    color: var(--teal-dark);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.badge-like-new {
+    background-color: #efecff;
+    color: #6352d8;
+}
+
+.badge-good {
+    background-color: var(--teal-soft);
+    color: var(--teal-dark);
+}
+
+.badge-refurbished {
+    background-color: #fdf1de;
+    color: #a46c08;
+}
+
+.badge-parts {
+    background-color: #fbe9e9;
+    color: #b34f4f;
 }
