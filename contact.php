@@ -18,15 +18,16 @@ ob_start();
                 <form>
                     <div class="mb-3">
                         <label class="form-label small fw-semibold">Your Name</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control"  name="fullname"   data-validation="required alpha">
                     </div>
+                     <span class="error text-danger" id="nameError"></span>
                     <div class="mb-3">
                         <label class="form-label small fw-semibold">Email Address</label>
-                        <input type="email" class="form-control" required>
+                        <input type="email" class="form-control" >
                     </div>
                     <div class="mb-3">
                         <label class="form-label small fw-semibold">Message</label>
-                        <textarea class="form-control" rows="4" required></textarea>
+                        <textarea class="form-control" rows="4" ></textarea>
                     </div>
                     <button type="submit" class="btn btn-success px-4 rounded-3">Send Message</button>
                 </form>

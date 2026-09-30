@@ -16,59 +16,6 @@ $grand_total = $subtotal + $shipping;
 ob_start();
 ?>
 
-<style>
-    :root {
-        --primary-color: #0f5132;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        --border-radius: 16px;
-    }
-
-    body {
-        background-color: var(--bg-light);
-    }
-
-    .checkout-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 28px;
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: var(--card-shadow);
-    }
-
-    .btn-place-order {
-        background-color: var(--primary-color);
-        color: #ffffff;
-        border-radius: 12px;
-        padding: 14px 20px;
-        font-weight: 600;
-        border: none;
-    }
-
-    .btn-place-order:hover {
-        background-color: #0b3d26;
-        color: #ffffff;
-    }
-
-    .demo-note {
-        font-size: 13px;
-        color: #64748b;
-    }
-
-    .checkout-step-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 5px 10px;
-        margin-bottom: 12px;
-        background: var(--teal-soft);
-        color: var(--teal-dark);
-        border-radius: 20px;
-        font-size: 0.68rem;
-        font-weight: 800;
-    }
-</style>
-
 <div class="container py-4">
 
     <div class="checkout-step-badge">

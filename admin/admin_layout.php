@@ -1,144 +1,160 @@
 <?php
-$page_title = "Dashboard - Re-NewTech Admin";
-$page_heading = "Dashboard";
 
-$stats = [
-    ['label' => 'Total Revenue', 'value' => '₹4,82,500', 'icon' => 'bi-currency-rupee', 'color' => 'icon-teal'],
-    ['label' => 'Total Orders', 'value' => '128', 'icon' => 'bi-bag-check-fill', 'color' => 'icon-violet'],
-    ['label' => 'Active Products', 'value' => '46', 'icon' => 'bi-box-seam-fill', 'color' => 'icon-amber'],
-    ['label' => 'Registered Users', 'value' => '312', 'icon' => 'bi-people-fill', 'color' => 'icon-navy']
-];
+$current_admin_page = basename($_SERVER['PHP_SELF']);
 
-$recent_orders = [
-    ['id' => 'RNT10245', 'customer' => 'Ravi Patel', 'total' => 22500, 'status' => 'delivered'],
-    ['id' => 'RNT10198', 'customer' => 'Sneha Mehta', 'total' => 14999, 'status' => 'shipped'],
-    ['id' => 'RNT10122', 'customer' => 'Amit Shah', 'total' => 900, 'status' => 'cancelled'],
-    ['id' => 'RNT10087', 'customer' => 'Neha Joshi', 'total' => 6200, 'status' => 'pending']
-];
-
-$monthly_sales = [
-    'Apr' => 45, 'May' => 62, 'Jun' => 51, 'Jul' => 78, 'Aug' => 90, 'Sep' => 68
-];
-
-ob_start();
 ?>
 
-<style>
-    .dash-chart {
-        display: flex;
-        align-items: flex-end;
-        gap: 16px;
-        height: 190px;
-        padding-top: 10px;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    .dash-bar-col {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        height: 100%;
-        gap: 8px;
-    }
+<head>
 
-    .dash-bar {
-        width: 100%;
-        max-width: 42px;
-        background: var(--teal);
-        border-radius: 7px 7px 0 0;
-        transition: 0.2s ease;
-    }
+    <meta charset="UTF-8">
 
-    .dash-bar:hover {
-        background: var(--navy);
-    }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    .dash-bar-col span {
-        color: var(--muted);
-        font-size: 0.7rem;
-        font-weight: 700;
-    }
-</style>
+    <title>
+        <?php
+        echo isset($page_title)
+            ? htmlspecialchars($page_title)
+            : 'Admin Panel - Re-NewTech';
+        ?>
+    </title>
 
-<!-- STAT CARDS -->
-<div class="row g-3 mb-4">
-    <?php foreach ($stats as $s): ?>
-        <div class="col-sm-6 col-xl-3">
-            <div class="admin-stat-card">
-                <div class="admin-stat-icon <?php echo $s['color']; ?>">
-                    <i class="bi <?php echo $s['icon']; ?>"></i>
-                </div>
-                <div>
-                    <strong><?php echo $s['value']; ?></strong>
-                    <span><?php echo $s['label']; ?></span>
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+    <!-- jQuery (required for admin_validate.js) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Admin JS -->
+<script src="../js/admin_validate.js"></script>
+    <!-- Main Site CSS (color tokens) -->
+    <link
+        rel="stylesheet"
+        href="../assets/css/style.css"
+    >
+
+    <!-- Admin Panel CSS -->
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin-style.css"
+    >
+
+</head>
+
+<body class="admin-body">
+
+<div class="admin-shell">
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar">
+
+        <a href="dashboard.php" class="admin-brand">
+            <span class="admin-brand-symbol">
+                <i class="bi bi-recycle"></i>
+            </span>
+            <span>Re-NewTech <small>Admin</small></span>
+        </a>
+
+      <nav class="admin-nav">
+
+    <a href="dashboard.php" class="admin-nav-link <?php echo ($current_admin_page == 'dashboard.php') ? 'active' : ''; ?>">
+        <i class="bi bi-grid-1x2-fill"></i> Dashboard
+    </a>
+
+    <a href="manage_products.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_products.php') ? 'active' : ''; ?>">
+        <i class="bi bi-box-seam-fill"></i> Products
+    </a>
+
+    <a href="manage_orders.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_orders.php') ? 'active' : ''; ?>">
+        <i class="bi bi-bag-check-fill"></i> Orders
+    </a>
+
+    <a href="manage_users.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_users.php') ? 'active' : ''; ?>">
+        <i class="bi bi-people-fill"></i> Users
+    </a>
+
+    <a href="manage_reviews.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_reviews.php') ? 'active' : ''; ?>">
+        <i class="bi bi-star-fill"></i> Reviews
+    </a>
+
+    <a href="manage_messages.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_messages.php') ? 'active' : ''; ?>">
+        <i class="bi bi-chat-dots-fill"></i> Messages
+    </a>
+
+    <div class="admin-nav-divider"></div>
+
+    <a href="../index.php" class="admin-nav-link">
+        <i class="bi bi-box-arrow-left"></i> Back to Site
+    </a>
+
+    <a href="../logout.php" class="admin-nav-link text-danger-link">
+        <i class="bi bi-power"></i> Logout
+    </a>
+
+</nav>
+    </aside>
+
+
+    <!-- MAIN AREA -->
+
+    <div class="admin-main">
+
+        <header class="admin-topbar">
+
+            <button class="admin-menu-toggle d-lg-none" type="button" onclick="document.querySelector('.admin-shell').classList.toggle('sidebar-open')">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+
+            <h5 class="admin-topbar-title">
+                <?php echo isset($page_heading) ? $page_heading : 'Dashboard'; ?>
+            </h5>
+
+            <div class="admin-topbar-actions">
+                <div class="admin-admin-chip">
+                    <span class="admin-avatar">A</span>
+                    <span>Admin</span>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
-</div>
 
-<div class="row g-3">
+        </header>
 
-    <!-- SALES CHART -->
-    <div class="col-lg-5">
-        <div class="admin-card h-100">
-            <h6 class="fw-bold text-dark mb-1">Monthly Sales</h6>
-            <p class="text-muted small mb-3">Orders per month (demo data)</p>
+        <main class="admin-content">
 
-            <div class="dash-chart">
-                <?php foreach ($monthly_sales as $month => $value): ?>
-                    <div class="dash-bar-col">
-                        <div class="dash-bar" style="height: <?php echo $value; ?>%;" title="<?php echo $value; ?> orders"></div>
-                        <span><?php echo $month; ?></span>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+            <?php
+
+            if (isset($page_content))
+            {
+                echo $page_content;
+            }
+
+            ?>
+
+        </main>
+
     </div>
 
-    <!-- RECENT ORDERS -->
-    <div class="col-lg-7">
-        <div class="admin-card h-100">
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="fw-bold text-dark mb-0">Recent Orders</h6>
-                <a href="manage_orders.php" class="admin-btn">View All</a>
-            </div>
-
-            <div class="table-responsive">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($recent_orders as $o): ?>
-                            <tr>
-                                <td><strong>#<?php echo $o['id']; ?></strong></td>
-                                <td><?php echo $o['customer']; ?></td>
-                                <td>₹<?php echo number_format($o['total']); ?></td>
-                                <td>
-                                    <span class="admin-pill pill-<?php echo $o['status']; ?>">
-                                        <?php echo ucfirst($o['status']); ?>
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-
 </div>
 
-<?php
-$page_content = ob_get_clean();
-require_once 'admin_layout.php';
-?>
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+</body>
+
+</html>

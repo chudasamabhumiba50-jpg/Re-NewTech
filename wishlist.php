@@ -28,50 +28,6 @@ $wishlist_items = [
 ob_start();
 ?>
 
-<style>
-    :root {
-        --primary-color: #0f5132;
-        --primary-hover: #0b3d26;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        --border-radius: 16px;
-    }
-
-    body {
-        background-color: var(--bg-light);
-    }
-
-    .wishlist-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 24px;
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: var(--card-shadow);
-    }
-
-    .product-img-thumb {
-        width: 80px;
-        height: 80px;
-        object-fit: contain;
-        background: #f8f9fa;
-        border-radius: 12px;
-        padding: 6px;
-    }
-
-    .btn-buy-now {
-        background-color: var(--primary-color);
-        color: #ffffff;
-        border-radius: 10px;
-        padding: 8px 16px;
-        font-weight: 600;
-        border: none;
-        transition: all 0.2s ease;
-    }
-    .btn-buy-now:hover {
-        background-color: var(--primary-hover);
-        color: #ffffff;
-    }
-</style>
 
 <div class="container py-4">
 

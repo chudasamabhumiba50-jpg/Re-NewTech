@@ -17,49 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ob_start();
 ?>
 
-<style>
-    :root {
-        --primary-color: #0f5132;
-        --primary-hover: #0b3d26;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 15px 35px rgba(0,0,0,0.08);
-        --border-radius: 20px;
-    }
-
-    body {
-        background-color: var(--bg-light);
-    }
-
-    .auth-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 40px;
-        border: 1px solid rgba(0,0,0,0.05);
-        box-shadow: var(--card-shadow);
-    }
-
-    .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(15, 81, 50, 0.15);
-    }
-
-    .btn-auth {
-        background-color: var(--primary-color);
-        color: #ffffff;
-        border-radius: 12px;
-        padding: 12px;
-        font-weight: 600;
-        border: none;
-        transition: all 0.3s ease;
-    }
-
-    .btn-auth:hover {
-        background-color: var(--primary-hover);
-        color: #ffffff;
-        transform: translateY(-2px);
-    }
-</style>
-
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-5">

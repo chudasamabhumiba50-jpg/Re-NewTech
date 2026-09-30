@@ -3,55 +3,7 @@ $page_title = "How It Works - Re-NewTech";
 ob_start();
 ?>
 
-<style>
-    :root {
-        --primary-color: #0f5132;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        --border-radius: 16px;
-    }
 
-    body {
-        background-color: var(--bg-light);
-    }
-
-    .hero-box {
-        background: linear-gradient(135deg, #0f5132 0%, #198754 100%);
-        color: white;
-        border-radius: var(--border-radius);
-        padding: 40px 20px;
-    }
-
-    .step-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 30px;
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: var(--card-shadow);
-        height: 100%;
-        position: relative;
-    }
-
-    .step-number {
-        width: 45px;
-        height: 45px;
-        background-color: #0f5132;
-        color: white;
-        font-weight: bold;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
-
-    .icon-box {
-        font-size: 2.5rem;
-        color: #198754;
-        margin-bottom: 15px;
-    }
-</style>
 
 <div class="container py-4">
 

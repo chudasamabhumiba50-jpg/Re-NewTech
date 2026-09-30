@@ -3,58 +3,12 @@ $page_title = "About Us - Re-NewTech";
 ob_start();
 ?>
 
-<style>
-    :root {
-        --primary-color: #0f5132;
-        --bg-light: #f4f7f6;
-        --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        --border-radius: 16px;
-    }
-
-    body {
-        background-color: var(--bg-light);
-    }
-
-    .about-hero {
-        background: linear-gradient(135deg, #0f5132 0%, #198754 100%);
-        color: white;
-        border-radius: var(--border-radius);
-        padding: 50px 30px;
-    }
-
-    .feature-card {
-        background: #ffffff;
-        border-radius: var(--border-radius);
-        padding: 25px;
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: var(--card-shadow);
-        height: 100%;
-        transition: transform 0.3s ease;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .icon-box {
-        width: 60px;
-        height: 60px;
-        background: #e6f4ea;
-        color: #0f5132;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-    }
-</style>
 
 <div class="container py-4">
 
     <!-- HERO SECTION -->
     <div class="about-hero text-center mb-5">
-        <h1>About Us......123</h1>
+        
         <span class="badge bg-light text-success px-3 py-2 rounded-pill fw-bold mb-3">Green Tech Revolution</span>
         <h1 class="fw-bold mb-3">Renewing Tech, Restoring Nature</h1>
         <p class="lead mx-auto opacity-90" style="max-width: 700px;">

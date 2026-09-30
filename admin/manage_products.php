@@ -13,91 +13,7 @@ $products = [
 ob_start();
 ?>
 
-<style>
-    .admin-thumb {
-        width: 44px;
-        height: 44px;
-        object-fit: cover;
-        border-radius: 9px;
-        border: 1px solid var(--line);
-    }
 
-    .admin-search {
-        position: relative;
-        max-width: 300px;
-        width: 100%;
-    }
-
-    .admin-search i {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--muted);
-        font-size: 0.85rem;
-    }
-
-    .admin-search input {
-        width: 100%;
-        padding: 9px 12px 9px 34px;
-        border: 1px solid var(--line);
-        border-radius: 9px;
-        font-size: 0.82rem;
-        outline: none;
-    }
-
-    .admin-search input:focus {
-        border-color: var(--teal);
-    }
-
-    .admin-modal-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        background: rgba(11, 18, 32, 0.6);
-        padding: 20px;
-    }
-
-    .admin-modal-backdrop.show {
-        display: flex;
-    }
-
-    .admin-modal {
-        width: 100%;
-        max-width: 480px;
-        max-height: 90vh;
-        overflow-y: auto;
-        background: var(--white);
-        border-radius: 16px;
-        padding: 26px;
-    }
-
-    .admin-modal label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 0.76rem;
-        font-weight: 700;
-    }
-
-    .admin-modal input,
-    .admin-modal select {
-        width: 100%;
-        padding: 10px 12px;
-        margin-bottom: 14px;
-        border: 1px solid var(--line);
-        border-radius: 9px;
-        font-size: 0.82rem;
-        outline: none;
-    }
-
-    .admin-modal input:focus,
-    .admin-modal select:focus {
-        border-color: var(--teal);
-    }
-</style>
 
 <div class="admin-card">
 
@@ -219,31 +135,7 @@ ob_start();
     </div>
 </div>
 
-<script>
-    function toggleProductModal(show) {
-        document.getElementById('productModal').classList.toggle('show', show);
-    }
 
-    function deleteProductRow(button) {
-        if (confirm('Delete this product? (demo only)')) {
-            button.closest('tr').remove();
-        }
-    }
-
-    document.getElementById('productForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        alert('Demo only: product saved (not stored in database).');
-        this.reset();
-        toggleProductModal(false);
-    });
-
-    document.getElementById('adminProductSearch').addEventListener('input', function () {
-        const term = this.value.trim().toLowerCase();
-        document.querySelectorAll('#productsTable tbody tr').forEach(function (row) {
-            row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
-        });
-    });
-</script>
 
 <?php
 $page_content = ob_get_clean();

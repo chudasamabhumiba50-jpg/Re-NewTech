@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $page_title = "Manage Orders - Re-NewTech Admin";
 $page_heading = "Orders";
 
@@ -13,42 +16,7 @@ $orders = [
 ob_start();
 ?>
 
-<style>
-    .order-status-select {
-        padding: 5px 8px;
-        border: 1px solid var(--line);
-        border-radius: 7px;
-        font-size: 0.74rem;
-        font-weight: 700;
-        background: var(--white);
-        cursor: pointer;
-        outline: none;
-    }
 
-    .admin-filter-tabs {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-bottom: 16px;
-    }
-
-    .admin-filter-tab {
-        padding: 7px 14px;
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        background: var(--white);
-        color: var(--muted);
-        font-size: 0.74rem;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .admin-filter-tab.active {
-        background: var(--navy);
-        color: var(--white);
-        border-color: var(--navy);
-    }
-</style>
 
 <div class="admin-card">
 
@@ -103,34 +71,7 @@ ob_start();
 
 </div>
 
-<script>
-    const orderRows = document.querySelectorAll('#ordersTable tbody tr');
-    const orderTabs = document.querySelectorAll('.admin-filter-tab');
 
-    orderTabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-            orderTabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-
-            const status = this.dataset.status;
-            orderRows.forEach(function (row) {
-                row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
-            });
-        });
-    });
-
-    document.querySelectorAll('.order-status-select').forEach(function (select) {
-        select.addEventListener('change', function () {
-            const row = this.closest('tr');
-            const pill = row.querySelector('.status-pill');
-            const newStatus = this.value;
-
-            row.dataset.status = newStatus;
-            pill.className = 'admin-pill status-pill pill-' + newStatus;
-            pill.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
-        });
-    });
-</script>
 
 <?php
 $page_content = ob_get_clean();
