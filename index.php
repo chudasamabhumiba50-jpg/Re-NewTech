@@ -469,6 +469,8 @@ ob_start();
 </section>
 
 
+
+
 <!-- =====================================================
      FEATURED PRODUCTS
 ===================================================== -->
@@ -477,388 +479,139 @@ ob_start();
 
     <div class="container">
 
-
         <div class="section-heading-row">
 
             <div>
-
-                <span class="section-eyebrow">
-                    FEATURED ITEMS
-                </span>
-
-                <h2>
-                    Devices Ready for a New Home
-                </h2>
-
-                <p>
-                    See the condition. Know the history.
-                    Choose with confidence.
-                </p>
-
+                <span class="section-eyebrow">FEATURED ITEMS</span>
+                <h2>Devices Ready for a New Home</h2>
+                <p>See the condition. Know the history. Choose with confidence.</p>
             </div>
 
-
-            <a
-                href="products.php"
-                class="section-link"
-            >
-
-                Browse catalog
-
-                <i class="bi bi-arrow-up-right"></i>
-
+            <a href="products.php" class="section-link">
+                Browse catalog <i class="bi bi-arrow-up-right"></i>
             </a>
 
         </div>
 
-
-        <div class="row g-4">
-
+        <div class="hp-grid">
 
             <!-- PRODUCT 1 -->
+            <div class="hp-card">
 
-            <div class="col-md-6 col-lg-3">
+                <div class="hp-card-img">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85" alt="Dell Latitude 7490">
+                    <span class="hp-condition hp-condition-good">Good Condition</span>
+                    <a href="wishlist.php" class="hp-wish-btn" title="Add to wishlist"><i class="bi bi-heart"></i></a>
+                </div>
 
-                <div class="product-card">
+                <div class="hp-card-body">
 
+                    <h3 class="hp-card-name">Dell Latitude 7490</h3>
+                    <p class="hp-card-spec">Core i7 &middot; 16GB RAM &middot; 512GB SSD</p>
 
-                    <div class="product-image">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85"
-                            alt="Used laptop"
-                        >
-
-
-                        <a
-                            href="wishlist.php"
-                            class="wishlist-button"
-                            title="Add to wishlist"
-                        >
-
-                            <i class="bi bi-heart"></i>
-
-                        </a>
-
+                    <div class="hp-card-meta">
+                        <span><i class="bi bi-clock"></i> Used 2.5 years</span>
+                        <span><i class="bi bi-check-circle"></i> Working</span>
                     </div>
 
-
-                    <div class="product-content">
-
-                        <span class="condition good">
-                            Good Condition
-                        </span>
-
-
-                        <h3>
-                            Dell Latitude 7490
-                        </h3>
-
-
-                        <p class="product-spec">
-                            Core i7 • 16GB RAM • 512GB SSD
-                        </p>
-
-
-                        <div class="product-info">
-
-                            <span>
-                                <i class="bi bi-clock"></i>
-                                Used 2.5 years
-                            </span>
-
-                            <span>
-                                <i class="bi bi-check-circle"></i>
-                                Working
-                            </span>
-
-                        </div>
-
-
-                        <div class="product-footer">
-
-                            <strong>
-                                ₹14,999
-                            </strong>
-
-
-                            <a
-                                href="cart.php"
-                                class="cart-button"
-                                title="Add to cart"
-                            >
-
-                                <i class="bi bi-bag-plus"></i>
-
-                            </a>
-
-                        </div>
-
+                    <div class="hp-card-foot">
+                        <strong>₹14,999</strong>
+                        <a href="cart.php" class="hp-cart-btn" title="Add to cart"><i class="bi bi-bag-plus"></i></a>
                     </div>
 
                 </div>
 
             </div>
-
 
             <!-- PRODUCT 2 -->
+            <div class="hp-card">
 
-            <div class="col-md-6 col-lg-3">
+                <div class="hp-card-img">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85" alt="Samsung Galaxy S22">
+                    <span class="hp-condition hp-condition-excellent">Excellent</span>
+                    <a href="wishlist.php" class="hp-wish-btn" title="Add to wishlist"><i class="bi bi-heart"></i></a>
+                </div>
 
-                <div class="product-card">
+                <div class="hp-card-body">
 
+                    <h3 class="hp-card-name">Samsung Galaxy S22</h3>
+                    <p class="hp-card-spec">128GB &middot; Unlocked</p>
 
-                    <div class="product-image">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85"
-                            alt="Used smartphone"
-                        >
-
-
-                        <a
-                            href="wishlist.php"
-                            class="wishlist-button"
-                        >
-
-                            <i class="bi bi-heart"></i>
-
-                        </a>
-
+                    <div class="hp-card-meta">
+                        <span><i class="bi bi-clock"></i> Used 1.5 years</span>
+                        <span><i class="bi bi-check-circle"></i> Working</span>
                     </div>
 
-
-                    <div class="product-content">
-
-                        <span class="condition excellent">
-                            Excellent
-                        </span>
-
-
-                        <h3>
-                            Samsung Galaxy S22
-                        </h3>
-
-
-                        <p class="product-spec">
-                            128GB • Unlocked
-                        </p>
-
-
-                        <div class="product-info">
-
-                            <span>
-                                <i class="bi bi-clock"></i>
-                                Used 1.5 years
-                            </span>
-
-                            <span>
-                                <i class="bi bi-check-circle"></i>
-                                Working
-                            </span>
-
-                        </div>
-
-
-                        <div class="product-footer">
-
-                            <strong>
-                                ₹19,500
-                            </strong>
-
-
-                            <a
-                                href="cart.php"
-                                class="cart-button"
-                            >
-
-                                <i class="bi bi-bag-plus"></i>
-
-                            </a>
-
-                        </div>
-
+                    <div class="hp-card-foot">
+                        <strong>₹19,500</strong>
+                        <a href="cart.php" class="hp-cart-btn" title="Add to cart"><i class="bi bi-bag-plus"></i></a>
                     </div>
 
                 </div>
 
             </div>
-
 
             <!-- PRODUCT 3 -->
+            <div class="hp-card">
 
-            <div class="col-md-6 col-lg-3">
+                <div class="hp-card-img">
+                    <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=85" alt="Dell 24 inch Monitor">
+                    <span class="hp-condition hp-condition-good">Good Condition</span>
+                    <a href="wishlist.php" class="hp-wish-btn" title="Add to wishlist"><i class="bi bi-heart"></i></a>
+                </div>
 
-                <div class="product-card">
+                <div class="hp-card-body">
 
+                    <h3 class="hp-card-name">Dell 24" Monitor</h3>
+                    <p class="hp-card-spec">Full HD &middot; IPS Display</p>
 
-                    <div class="product-image">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=85"
-                            alt="Used monitor"
-                        >
-
-
-                        <a
-                            href="wishlist.php"
-                            class="wishlist-button"
-                        >
-
-                            <i class="bi bi-heart"></i>
-
-                        </a>
-
+                    <div class="hp-card-meta">
+                        <span><i class="bi bi-clock"></i> Used 2 years</span>
+                        <span><i class="bi bi-check-circle"></i> Working</span>
                     </div>
 
-
-                    <div class="product-content">
-
-                        <span class="condition good">
-                            Good Condition
-                        </span>
-
-
-                        <h3>
-                            Dell 24" Monitor
-                        </h3>
-
-
-                        <p class="product-spec">
-                            Full HD • IPS Display
-                        </p>
-
-
-                        <div class="product-info">
-
-                            <span>
-                                <i class="bi bi-clock"></i>
-                                Used 2 years
-                            </span>
-
-                            <span>
-                                <i class="bi bi-check-circle"></i>
-                                Working
-                            </span>
-
-                        </div>
-
-
-                        <div class="product-footer">
-
-                            <strong>
-                                ₹6,800
-                            </strong>
-
-
-                            <a
-                                href="cart.php"
-                                class="cart-button"
-                            >
-
-                                <i class="bi bi-bag-plus"></i>
-
-                            </a>
-
-                        </div>
-
+                    <div class="hp-card-foot">
+                        <strong>₹6,800</strong>
+                        <a href="cart.php" class="hp-cart-btn" title="Add to cart"><i class="bi bi-bag-plus"></i></a>
                     </div>
 
                 </div>
 
             </div>
-
 
             <!-- PRODUCT 4 -->
+            <div class="hp-card">
 
-            <div class="col-md-6 col-lg-3">
+                <div class="hp-card-img">
+                    <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=900&q=85" alt="HP Laser Printer">
+                    <span class="hp-condition hp-condition-fair">Fair Condition</span>
+                    <a href="wishlist.php" class="hp-wish-btn" title="Add to wishlist"><i class="bi bi-heart"></i></a>
+                </div>
 
-                <div class="product-card">
+                <div class="hp-card-body">
 
+                    <h3 class="hp-card-name">HP Laser Printer</h3>
+                    <p class="hp-card-spec">Wireless &middot; Black &amp; White</p>
 
-                    <div class="product-image">
-
-                        <img
-                            src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=900&q=85"
-                            alt="Used printer"
-                        >
-
-
-                        <a
-                            href="wishlist.php"
-                            class="wishlist-button"
-                        >
-
-                            <i class="bi bi-heart"></i>
-
-                        </a>
-
+                    <div class="hp-card-meta">
+                        <span><i class="bi bi-clock"></i> Used 3 years</span>
+                        <span><i class="bi bi-wrench"></i> Minor Issue</span>
                     </div>
 
-
-                    <div class="product-content">
-
-                        <span class="condition fair">
-                            Fair Condition
-                        </span>
-
-
-                        <h3>
-                            HP Laser Printer
-                        </h3>
-
-
-                        <p class="product-spec">
-                            Wireless • Black & White
-                        </p>
-
-
-                        <div class="product-info">
-
-                            <span>
-                                <i class="bi bi-clock"></i>
-                                Used 3 years
-                            </span>
-
-                            <span>
-                                <i class="bi bi-wrench"></i>
-                                Minor Issue
-                            </span>
-
-                        </div>
-
-
-                        <div class="product-footer">
-
-                            <strong>
-                                ₹4,200
-                            </strong>
-
-
-                            <a
-                                href="cart.php"
-                                class="cart-button"
-                            >
-
-                                <i class="bi bi-bag-plus"></i>
-
-                            </a>
-
-                        </div>
-
+                    <div class="hp-card-foot">
+                        <strong>₹4,200</strong>
+                        <a href="cart.php" class="hp-cart-btn" title="Add to cart"><i class="bi bi-bag-plus"></i></a>
                     </div>
 
                 </div>
 
             </div>
-
 
         </div>
 
     </div>
 
 </section>
-
 
 <!-- =====================================================
      QUOTE

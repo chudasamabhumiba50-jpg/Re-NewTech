@@ -1,4 +1,24 @@
 $(document).ready(function () {
+  /*
+  Validation rules and their meanings:
+    required: Field must not be empty.
+    email: Field must be a valid email address.
+    strongPassword: Password must be at least 8 characters, include  uppercase, lowercase, number, and special character.
+    min: Field must have a minimum length (specified by data-min attribute).
+    data-min: Minimum characters (used with min validation).
+    max: Field must have a maximum length (specified by data-max attribute).
+    data-max: Maximum characters (used with max validation).
+    confirmPassword: Field must match the password field (specified by data-password-id attribute).
+    data-password-id: ID of the password field to match (used with confirmPassword validation).
+    terms: Field must be checked (for terms and conditions).
+    alpha: Field must only contain letters.
+    numeric: Field must only contain numbers.
+    file: Field must be a valid file.
+    data-filesize: Maximum file size in KB (used with file validation).
+    data-filetypes: Allowed file types (used with file validation, separated by commas).
+    data-min-items: Minimum number of checkboxes that must be selected (used with checkbox groups).
+    data-max-items: Maximum number of checkboxes that can be selected (used with checkbox groups).
+  */
   function validateField(input) {
     let field = $(input);
     let value = field.val().trim();
@@ -47,7 +67,6 @@ $(document).ready(function () {
         validationType.includes("terms") &&
         !field.is(":checked")
       ) {
-        
         errorMessage = "You must agree to the Terms & Conditions.";
       }
 
@@ -167,256 +186,4 @@ $(document).ready(function () {
       e.preventDefault();
     }
   });
-
-//     // ===== ORDERS PAGE FILTER =====
-//   const filterBtns = document.querySelectorAll('.order-filter-btn');
-//   const orderCards = document.querySelectorAll('.order-card');
-//   const noOrdersBox = document.getElementById('noOrdersBox');
-
-//   filterBtns.forEach(function (btn) {
-//     btn.addEventListener('click', function () {
-
-//       filterBtns.forEach(b => b.classList.remove('active'));
-//       this.classList.add('active');
-
-//       const status = this.dataset.status;
-//       let visibleCount = 0;
-
-//       orderCards.forEach(function (card) {
-//         if (status === 'all' || card.dataset.status === status) {
-//           card.style.display = 'block';
-//           visibleCount++;
-//         } else {
-//           card.style.display = 'none';
-//         }
-//       });
-
-//       if (noOrdersBox) {
-//         noOrdersBox.style.display = visibleCount === 0 ? 'block' : 'none';
-//       }
-//     });
-//   });
-//   /*payment javascript*/
-//    const tabButtons = document.querySelectorAll('.pay-tab-btn');
-//     const panels = document.querySelectorAll('.pay-panel');
-
-//     tabButtons.forEach(function (btn) {
-//         btn.addEventListener('click', function () {
-
-//             tabButtons.forEach(b => b.classList.remove('active'));
-//             panels.forEach(p => p.classList.remove('active'));
-
-//             this.classList.add('active');
-//             document.getElementById('panel-' + this.dataset.tab).classList.add('active');
-//         });
-//     });
-
-//     const upiOptions = document.querySelectorAll('.upi-app-option');
-//     upiOptions.forEach(function (opt) {
-//         opt.addEventListener('click', function () {
-//             upiOptions.forEach(o => o.classList.remove('selected'));
-//             this.classList.add('selected');
-//         });
-//     });
-
-//     document.getElementById('payNowBtn').addEventListener('click', function () {
-
-//         const overlay = document.getElementById('processingOverlay');
-//         overlay.classList.add('show');
-
-//         setTimeout(function () {
-//             window.location.href = 'order_success.php';
-//         }, 2200);
-//     });
-//     /*product_details javascript*/
-//      function changeMainImage(src, element) {
-//         document.getElementById('currentMainImg').src = src;
-//         document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('is-active'));
-//         element.classList.add('is-active');
-//     }
-
-//     function switchTab(tabName) {
-//         document.querySelectorAll('.pd-tab-btn').forEach(btn => {
-//             btn.classList.toggle('is-active', btn.dataset.tab === tabName);
-//         });
-//         document.querySelectorAll('.pd-tab-panel').forEach(panel => {
-//             panel.classList.remove('is-active');
-//         });
-//         document.getElementById('pd' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Panel').classList.add('is-active');
-//     }
-
-//     const starIcons = document.querySelectorAll('#starRatingInput i');
-//     const selectedRatingInput = document.getElementById('selectedRating');
-
-//     starIcons.forEach(function (star) {
-//         star.addEventListener('click', function () {
-//             const value = parseInt(this.dataset.value);
-//             selectedRatingInput.value = value;
-//             starIcons.forEach(s => s.classList.toggle('is-active', parseInt(s.dataset.value) <= value));
-//         });
-//     });
-
-//     document.getElementById('reviewForm').addEventListener('submit', function (event) {
-//         event.preventDefault();
-
-//         const rating = parseInt(selectedRatingInput.value);
-//         const name = document.getElementById('reviewerName').value.trim();
-//         const text = document.getElementById('reviewText').value.trim();
-
-//         if (rating === 0) {
-//             alert('Please select a star rating.');
-//             return;
-//         }
-
-//         if (name === '' || text === '') {
-//             alert('Please fill in your name and review.');
-//             return;
-//         }
-
-//         const today = new Date();
-//         const dateStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-
-//         let starsHtml = '';
-//         for (let i = 1; i <= 5; i++) {
-//             starsHtml += i <= rating ? '<i class="bi bi-star-fill"></i>' : '<i class="bi bi-star"></i>';
-//         }
-
-//         const reviewCard = document.createElement('div');
-//         reviewCard.className = 'pd-review-card';
-//         reviewCard.innerHTML = `
-//             <div class="pd-review-head">
-//                 <div class="d-flex align-items-center">
-//                     <span class="pd-avatar">${name.charAt(0).toUpperCase()}</span>
-//                     <div>
-//                         <div class="fw-semibold small text-dark">
-//                             ${name}
-//                             <span class="pd-verified ms-1"><i class="bi bi-patch-check-fill"></i> Just Now</span>
-//                         </div>
-//                         <div class="pd-review-stars">${starsHtml}</div>
-//                     </div>
-//                 </div>
-//                 <span class="text-muted small">${dateStr}</span>
-//             </div>
-//             <p class="pd-review-text">${text}</p>
-//         `;
-
-//         const reviewList = document.getElementById('reviewList');
-//         reviewList.insertBefore(reviewCard, reviewList.firstChild);
-
-//         this.reset();
-//         selectedRatingInput.value = 0;
-//         starIcons.forEach(s => s.classList.remove('is-active'));
-
-//         alert('Thank you! Your review has been submitted (demo only, not saved to database).');
-//     });
-//     /*product javascript*/
-//      const searchInput = document.getElementById('productSearchInput');
-//     const categoryChips = document.querySelectorAll('#categoryChipGroup .pc-chip');
-//     const conditionChips = document.querySelectorAll('#conditionChipGroup .pc-chip');
-//     const priceRangeInput = document.getElementById('priceRangeInput');
-//     const priceRangeLabel = document.getElementById('priceRangeLabel');
-//     const sortSelect = document.getElementById('sortSelect');
-//     const resetFiltersBtn = document.getElementById('resetFiltersBtn');
-
-//     const productGrid = document.getElementById('productGrid');
-//     const productItems = Array.from(document.querySelectorAll('.product-item'));
-//     const noResultsBox = document.getElementById('noResultsBox');
-//     const visibleCountText = document.getElementById('visibleCountText');
-
-//     let activeCategory = 'All Categories';
-//     let activeCondition = 'All Conditions';
-
-//     function setActiveChip(chipList, chip, valueSetter) {
-//         chipList.forEach(c => c.classList.remove('is-active'));
-//         chip.classList.add('is-active');
-//         valueSetter(chip.dataset.value);
-//         applyFilters();
-//     }
-
-//     categoryChips.forEach(chip => {
-//         chip.addEventListener('click', () => setActiveChip(categoryChips, chip, v => activeCategory = v));
-//     });
-
-//     conditionChips.forEach(chip => {
-//         chip.addEventListener('click', () => setActiveChip(conditionChips, chip, v => activeCondition = v));
-//     });
-
-//     function applyFilters() {
-
-//         const searchTerm = searchInput.value.trim().toLowerCase();
-//         const maxPrice = parseInt(priceRangeInput.value);
-//         let visibleCount = 0;
-
-//         productItems.forEach(function (item) {
-
-//             const name = item.dataset.name;
-//             const specs = item.dataset.specs;
-//             const category = item.dataset.category;
-//             const condition = item.dataset.condition;
-//             const price = parseInt(item.dataset.price);
-
-//             const matchesSearch = searchTerm === '' || name.includes(searchTerm) || specs.includes(searchTerm) || category.toLowerCase().includes(searchTerm);
-//             const matchesCategory = activeCategory === 'All Categories' || category === activeCategory;
-//             const matchesCondition = activeCondition === 'All Conditions' || condition === activeCondition;
-//             const matchesPrice = price <= maxPrice;
-
-//             if (matchesSearch && matchesCategory && matchesCondition && matchesPrice) {
-//                 item.style.display = '';
-//                 visibleCount++;
-//             } else {
-//                 item.style.display = 'none';
-//             }
-//         });
-
-//         visibleCountText.textContent = visibleCount;
-//         noResultsBox.style.display = visibleCount === 0 ? 'block' : 'none';
-//         productGrid.style.display = visibleCount === 0 ? 'none' : 'grid';
-//     }
-
-//     function applySort() {
-
-//         const sortValue = sortSelect.value;
-//         const sortedItems = productItems.slice();
-
-//         if (sortValue === 'low') {
-//             sortedItems.sort((a, b) => parseInt(a.dataset.price) - parseInt(b.dataset.price));
-//         } else if (sortValue === 'high') {
-//             sortedItems.sort((a, b) => parseInt(b.dataset.price) - parseInt(a.dataset.price));
-//         }
-
-//         sortedItems.forEach(item => productGrid.appendChild(item));
-//     }
-
-//     searchInput.addEventListener('input', applyFilters);
-
-//     priceRangeInput.addEventListener('input', function () {
-//         priceRangeLabel.textContent = '₹' + parseInt(this.value).toLocaleString('en-IN');
-//         applyFilters();
-//     });
-
-//     sortSelect.addEventListener('change', function () {
-//         applySort();
-//         applyFilters();
-//     });
-
-//     resetFiltersBtn.addEventListener('click', function () {
-
-//         searchInput.value = '';
-
-//         categoryChips.forEach(c => c.classList.remove('is-active'));
-//         categoryChips[0].classList.add('is-active');
-//         activeCategory = 'All Categories';
-
-//         conditionChips.forEach(c => c.classList.remove('is-active'));
-//         conditionChips[0].classList.add('is-active');
-//         activeCondition = 'All Conditions';
-
-//         priceRangeInput.value = 65000;
-//         priceRangeLabel.textContent = '₹65,000';
-//         sortSelect.value = 'featured';
-
-//         applySort();
-//         applyFilters();
-//     });
-// });
-
+});

@@ -158,58 +158,70 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <i class="bi bi-bag"></i>
     </a>
 
-    <div class="dropdown">
+<div class="dropdown">
 
-        <button type="button" id="accountDropdown" class="nav-icon-button account-toggle-btn <?php echo ($current_page == 'orders.php') ? 'active-icon' : ''; ?>" data-bs-toggle="dropdown" aria-expanded="false" title="Account">
-            <i class="bi bi-person"></i>
-        </button>
+    <button
+        type="button"
+        id="accountDropdown"
+        class="nav-icon-button account-toggle-btn <?php echo ($current_page == 'profile.php' || $current_page == 'orders.php') ? 'active-icon' : ''; ?>"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        title="Account"
+    >
+        <i class="bi bi-person"></i>
+    </button>
 
-        <ul class="dropdown-menu dropdown-menu-end account-dropdown-menu" aria-labelledby="accountDropdown">
+    <ul
+        class="dropdown-menu dropdown-menu-end account-dropdown-menu"
+        aria-labelledby="accountDropdown"
+    >
 
-            <li>
-                <a class="dropdown-item" href="orders.php">
-                    <i class="bi bi-bag-check me-2"></i> My Orders
-                </a>
-            </li>
+        <li>
+            <a class="dropdown-item" href="profile.php">
+                <i class="bi bi-person-circle me-2"></i>
+                My Profile
+            </a>
+        </li>
+        <li>
+    <a class="dropdown-item" href="account.php">
+        <i class="bi bi-person-circle me-2"></i> My Account
+    </a>
+</li>
 
-            <li>
-                <a class="dropdown-item" href="wishlist.php">
-                    <i class="bi bi-heart me-2"></i> My Wishlist
-                </a>
-            </li>
+        <li>
+            <a class="dropdown-item" href="orders.php">
+                <i class="bi bi-bag-check me-2"></i>
+                My Orders
+            </a>
+        </li>
 
-            <li>
-                <hr class="dropdown-divider">
-            </li>
+        <li>
+            <a class="dropdown-item" href="wishlist.php">
+                <i class="bi bi-heart me-2"></i>
+                My Wishlist
+            </a>
+        </li>
 
-            <li>
-                <a class="dropdown-item" href="login.php">
-                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
-                </a>
-            </li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
 
-            <li>
-                <a class="dropdown-item" href="register.php">
-                    <i class="bi bi-person-plus me-2"></i> Register
-                </a>
-            </li>
-             <li>
-        <a class="dropdown-item" href="logout.php">
-            <i class="bi bi-box-arrow-right me-2"></i> Logout
-        </a>
-    </li>
+        <li>
+            <a class="dropdown-item" href="logout.php">
+                <i class="bi bi-box-arrow-right me-2"></i>
+                Logout
+            </a>
+        </li>
 
-        </ul>
+    </ul>
 
-    </div>
+</div>
 
     <a href="login.php" class="btn btn-nav-login">
-        Login
-    </a>
+    <i class="bi bi-box-arrow-in-right me-1"></i>
+    Login
+</a>
 
-    <a href="register.php" class="btn btn-nav-register">
-        Register
-    </a>
 
 </div>
 

@@ -19,15 +19,15 @@ ob_start();
 <div class="container py-4">
 
     <div class="checkout-step-badge">
-        <i class="bi bi-1-circle-fill"></i> Step 1 of 2 — Shipping Details
-    </div>
+    <i class="bi bi-shield-check"></i> Secure Checkout
+</div>
 
     <h3 class="fw-bold text-dark mb-4">
         <i class="bi bi-shield-lock-fill me-2 text-success"></i>
         Checkout
     </h3>
 
-    <form id="checkoutForm" action="payment.php" method="get">
+       <form id="checkoutForm" action="order_success.php" method="get">
         <div class="row g-4">
 
             <!-- Left Side -->
@@ -40,39 +40,80 @@ ob_start();
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Full Name</label>
-                            <input type="text" class="form-control"
-                                   placeholder="Enter your full name" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="full_name"
+                                placeholder="Enter your full name"
+                                data-validation="required alpha min max"
+                                data-min="3"
+                                data-max="50"
+                            >
+                            <span id="full_nameError" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Phone Number</label>
-                            <input type="tel" class="form-control"
-                                   placeholder="+91 98765 43210" required>
+                            <input
+                                type="tel"
+                                class="form-control"
+                                name="phone"
+                                placeholder="98765 43210"
+                                data-validation="required numeric min max"
+                                data-min="10"
+                                data-max="10"
+                            >
+                            <span id="phoneError" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12">
                             <label class="form-label small fw-semibold">Address</label>
-                            <input type="text" class="form-control"
-                                   placeholder="House / Street / Area" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="address"
+                                placeholder="House / Street / Area"
+                                data-validation="required min max"
+                                data-min="5"
+                                data-max="120"
+                            >
+                            <span id="addressError" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">City</label>
-                            <input type="text" class="form-control"
-                                   placeholder="Ahmedabad" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="city"
+                                placeholder="Ahmedabad"
+                                data-validation="required alpha min max"
+                                data-min="2"
+                                data-max="40"
+                            >
+                            <span id="cityError" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label small fw-semibold">Pincode</label>
-                            <input type="text" class="form-control"
-                                   placeholder="380001" maxlength="6" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="pincode"
+                                placeholder="380001"
+                                maxlength="6"
+                                data-validation="required numeric min max"
+                                data-min="6"
+                                data-max="6"
+                            >
+                            <span id="pincodeError" class="text-danger small"></span>
                         </div>
                     </div>
 
                     <p class="demo-note mt-3 mb-0">
-                        <i class="bi bi-info-circle me-1"></i>
-                        Payment method will be selected on the next step.
-                    </p>
+    <i class="bi bi-info-circle me-1"></i>
+    In a live application, you would be redirected to a secure payment gateway here.
+</p>
                 </div>
             </div>
 
@@ -118,10 +159,9 @@ ob_start();
                     </div>
 
                     <button type="submit" class="btn btn-place-order w-100">
-                        Continue to Payment
-                        <i class="bi bi-arrow-right ms-1"></i>
-                    </button>
-
+    Continue to Payment
+    <i class="bi bi-arrow-right ms-1"></i>
+</button>
                     <p class="text-muted small text-center mt-3 mb-0">
                         <i class="bi bi-shield-check me-1"></i>
                         Secure checkout demo

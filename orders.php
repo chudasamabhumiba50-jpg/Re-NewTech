@@ -47,91 +47,104 @@ $orders = [
 ob_start();
 ?>
 
+<div class="ord-page">
+<div class="container py-4">
 
-<div class="container py-4 orders-wrapper">
-
-    <h3 class="fw-bold text-dark mb-1">
-        <i class="bi bi-bag-check-fill me-2 text-success"></i>
-        My Orders
-    </h3>
-
-    <p class="text-muted small mb-4">
-        Track and manage all your Re-NewTech orders.
-    </p>
-
-    <div class="orders-filter-bar" id="orderFilterBar">
-        <button type="button" class="order-filter-btn active" data-status="all">All Orders</button>
-        <button type="button" class="order-filter-btn" data-status="delivered">Delivered</button>
-        <button type="button" class="order-filter-btn" data-status="shipped">Shipped</button>
-        <button type="button" class="order-filter-btn" data-status="cancelled">Cancelled</button>
+    <div class="ord-heading-row">
+        <div>
+            <h1 class="ord-heading"><i class="bi bi-bag-check-fill"></i> My Orders</h1>
+            <p class="ord-subtext">Track and manage all your Re-NewTech orders.</p>
+        </div>
+        <span class="ord-count-chip"><?php echo count($orders); ?> Orders</span>
     </div>
 
-    <div id="ordersList">
+    <div class="ord-list">
 
         <?php foreach ($orders as $order): ?>
 
-            <div class="order-card" data-status="<?php echo $order['status']; ?>">
+            <div class="ord-card">
 
-                <div class="order-card-head">
+                <div class="ord-card-top">
 
-                    <div class="order-id-block">
-                        <small>Order ID</small>
+                    <div class="ord-id-block">
+                        <span>Order Placed</span>
+                        <strong><?php echo $order['date']; ?></strong>
+                    </div>
+
+                    <div class="ord-id-block">
+                        <span>Order ID</span>
                         <strong>#<?php echo $order['id']; ?></strong>
                     </div>
 
-                    <span class="order-status-pill status-<?php echo $order['status']; ?>">
-                        <?php if ($order['status'] === 'delivered'): ?>
-                            <i class="bi bi-check-circle-fill"></i>
-                        <?php elseif ($order['status'] === 'shipped'): ?>
-                            <i class="bi bi-truck"></i>
-                        <?php else: ?>
-                            <i class="bi bi-x-circle-fill"></i>
-                        <?php endif; ?>
-                        <?php echo $order['status']; ?>
-                    </span>
+                    <div class="ord-id-block">
+                        <span>Payment</span>
+                        <strong><?php echo $order['payment']; ?></strong>
+                    </div>
+
+                    <div class="ord-id-block ord-id-block-right">
+                        <span>Total</span>
+                        <strong>₹<?php echo number_format($order['total']); ?></strong>
+                    </div>
 
                 </div>
 
-                <div class="order-card-body">
+                <div class="ord-card-body">
 
                     <?php foreach ($order['items'] as $item): ?>
-                        <div class="order-item-row">
-                            <span>
-                                <?php echo $item['name']; ?>
-                                <span class="qty-tag">× <?php echo $item['qty']; ?></span>
-                            </span>
-                            <span class="fw-bold">
-                                ₹<?php echo number_format($item['price'] * $item['qty']); ?>
-                            </span>
+                        <div class="ord-item-row">
+                            <div class="ord-item-icon"><i class="bi bi-box-seam"></i></div>
+                            <div class="ord-item-info">
+                                <strong><?php echo $item['name']; ?></strong>
+                                <span>Qty: <?php echo $item['qty']; ?></span>
+                            </div>
+                            <div class="ord-item-price">₹<?php echo number_format($item['price'] * $item['qty']); ?></div>
                         </div>
                     <?php endforeach; ?>
 
                 </div>
 
-                <div class="order-card-footer">
+                <div class="ord-card-foot">
 
-                    <div class="order-footer-meta">
-                        <span>Placed on <strong><?php echo $order['date']; ?></strong></span>
-                        <span>Total <strong>₹<?php echo number_format($order['total']); ?></strong></span>
+                    <div class="ord-status-track status-<?php echo $order['status']; ?>">
+
+                        <div class="ord-status-step <?php echo in_array($order['status'], ['shipped', 'delivered']) ? 'is-done' : ($order['status'] === 'cancelled' ? 'is-cancelled' : 'is-current'); ?>">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Placed</span>
+                        </div>
+
+                        <div class="ord-status-line <?php echo in_array($order['status'], ['shipped', 'delivered']) ? 'is-done' : ''; ?>"></div>
+
+                        <div class="ord-status-step <?php echo $order['status'] === 'delivered' ? 'is-done' : ($order['status'] === 'shipped' ? 'is-current' : ($order['status'] === 'cancelled' ? 'is-cancelled' : '')); ?>">
+                            <i class="bi bi-truck"></i>
+                            <span>Shipped</span>
+                        </div>
+
+                        <div class="ord-status-line <?php echo $order['status'] === 'delivered' ? 'is-done' : ''; ?>"></div>
+
+                        <div class="ord-status-step <?php echo $order['status'] === 'delivered' ? 'is-done' : ($order['status'] === 'cancelled' ? 'is-cancelled' : ''); ?>">
+                            <i class="bi bi-house-check-fill"></i>
+                            <span>Delivered</span>
+                        </div>
+
                     </div>
 
-                    <div class="order-footer-actions">
+                    <?php if ($order['status'] === 'cancelled'): ?>
+                        <span class="ord-cancelled-tag"><i class="bi bi-x-circle-fill"></i> Order Cancelled</span>
+                    <?php endif; ?>
 
-                        <a href="product_details.php" class="order-action-btn">
-                            <i class="bi bi-eye me-1"></i> View
+                    <div class="ord-card-actions">
+
+                        <a href="product_details.php" class="ord-action-btn">
+                            <i class="bi bi-eye"></i> View Details
                         </a>
 
                         <?php if ($order['status'] === 'delivered'): ?>
-                            <a href="product_details.php" class="order-action-btn primary">
-                                <i class="bi bi-star me-1"></i> Write Review
+                            <a href="product_details.php" class="ord-action-btn ord-action-primary">
+                                <i class="bi bi-star"></i> Write Review
                             </a>
                         <?php elseif ($order['status'] === 'cancelled'): ?>
-                            <a href="products.php" class="order-action-btn primary">
-                                <i class="bi bi-arrow-repeat me-1"></i> Buy Again
-                            </a>
-                        <?php else: ?>
-                            <a href="#" class="order-action-btn primary">
-                                <i class="bi bi-geo-alt me-1"></i> Track Order
+                            <a href="products.php" class="ord-action-btn ord-action-primary">
+                                <i class="bi bi-arrow-repeat"></i> Buy Again
                             </a>
                         <?php endif; ?>
 
@@ -145,15 +158,8 @@ ob_start();
 
     </div>
 
-    <div class="no-orders-box" id="noOrdersBox">
-        <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
-        <h5 class="fw-bold text-dark">No orders found</h5>
-        <p class="text-muted small mb-0">There are no orders in this category.</p>
-    </div>
-
 </div>
-
-
+</div>
 
 <?php
 $page_content = ob_get_clean();
