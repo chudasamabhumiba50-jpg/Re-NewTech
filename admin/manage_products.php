@@ -10,28 +10,100 @@ $products = [
     ['id' => 5, 'name' => 'Samsung 500GB Evo SSD', 'category' => 'Storage', 'condition' => 'Like New', 'price' => 2400, 'stock' => 12, 'image' => 'https://images.unsplash.com/photo-1544652478-6653e09f18a2?w=200&q=70']
 ];
 
+// Search using a plain GET parameter (no JavaScript)
+$search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+$filtered_products = [];
+foreach ($products as $p) {
+    if ($search_term === '' || stripos($p['name'], $search_term) !== false || stripos($p['category'], $search_term) !== false) {
+        $filtered_products[] = $p;
+    }
+}
+
+$low_stock_count = 0;
+foreach ($products as $p) {
+    if ($p['stock'] <= 3) {
+        $low_stock_count++;
+    }
+}
+
 ob_start();
 ?>
 
+<!-- SUMMARY STRIP -->
+<div class="row g-3 mb-4">
 
+    <div class="col-6 col-md-3">
+        <div class="prd-admin-stat">
+            <i class="bi bi-box-seam-fill"></i>
+            <div>
+                <strong><?php echo count($products); ?></strong>
+                <span>Total Products</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <div class="prd-admin-stat">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <div>
+                <strong><?php echo $low_stock_count; ?></strong>
+                <span>Low Stock</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <div class="prd-admin-stat">
+            <i class="bi bi-tags-fill"></i>
+            <div>
+                <strong>5</strong>
+                <span>Categories</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <div class="prd-admin-stat">
+            <i class="bi bi-currency-rupee"></i>
+            <div>
+                <strong>₹56,298</strong>
+                <span>Inventory Value</span>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div class="admin-card">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+    <div class="prd-toolbar">
 
-        <div class="admin-search">
+        <form method="GET" action="manage_products.php" class="prd-search-form">
             <i class="bi bi-search"></i>
-            <input type="text" id="adminProductSearch" placeholder="Search products...">
-        </div>
+            <input
+                type="text"
+                name="search"
+                value="<?php echo htmlspecialchars($search_term); ?>"
+                placeholder="Search by name or category..."
+            >
+            <button type="submit">Search</button>
+        </form>
 
-        <button type="button" class="admin-btn admin-btn-primary" onclick="toggleProductModal(true)">
-            <i class="bi bi-plus-lg"></i> Add Product
-        </button>
+        <?php if ($search_term !== ''): ?>
+            <a href="manage_products.php" class="admin-btn">Clear Filter</a>
+        <?php endif; ?>
 
     </div>
 
+    <?php if ($search_term !== ''): ?>
+        <p class="prd-search-result">
+            Showing <strong><?php echo count($filtered_products); ?></strong> result(s) for "<strong><?php echo htmlspecialchars($search_term); ?></strong>"
+        </p>
+    <?php endif; ?>
+
     <div class="table-responsive">
-        <table class="admin-table" id="productsTable">
+        <table class="admin-table">
             <thead>
                 <tr>
                     <th>Product</th>
@@ -39,16 +111,21 @@ ob_start();
                     <th>Condition</th>
                     <th>Price</th>
                     <th>Stock</th>
-                    <th style="width: 100px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($products as $p): ?>
+                <?php if (count($filtered_products) === 0): ?>
+                    <tr>
+                        <td colspan="5" class="prd-admin-empty">No products matched your search.</td>
+                    </tr>
+                <?php endif; ?>
+
+                <?php foreach ($filtered_products as $p): ?>
                     <tr>
                         <td>
                             <div class="d-flex align-items-center gap-3">
                                 <img src="<?php echo $p['image']; ?>" class="admin-thumb" alt="">
-                                <strong class="product-name-cell"><?php echo $p['name']; ?></strong>
+                                <strong><?php echo $p['name']; ?></strong>
                             </div>
                         </td>
                         <td><?php echo $p['category']; ?></td>
@@ -59,16 +136,6 @@ ob_start();
                                 <?php echo $p['stock']; ?> in stock
                             </span>
                         </td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="admin-icon-btn" title="Edit" onclick="toggleProductModal(true)">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button type="button" class="admin-icon-btn" title="Delete" onclick="deleteProductRow(this)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -77,65 +144,102 @@ ob_start();
 
 </div>
 
-<!-- ADD / EDIT MODAL -->
-<div class="admin-modal-backdrop" id="productModal">
-    <div class="admin-modal">
+<!-- ADD PRODUCT (pure HTML details/summary, no JavaScript) -->
+<details class="prd-add-card">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="fw-bold text-dark mb-0">Add / Edit Product</h6>
-            <button type="button" class="admin-icon-btn" onclick="toggleProductModal(false)">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
+    <summary>
+        <i class="bi bi-plus-circle-fill"></i> Add New Product
+        <span class="prd-add-hint">Click to expand</span>
+    </summary>
 
-        <form id="productForm">
+    <form method="POST" action="manage_products.php" class="prd-add-form">
 
-            <label>Product Name</label>
-            <input type="text" placeholder="e.g. Dell Latitude 5490" required>
+        <div class="row g-3">
 
-            <label>Category</label>
-            <select required>
-                <option value="">Select category</option>
-                <option>Laptops</option>
-                <option>Smartphones</option>
-                <option>Components</option>
-                <option>Audio</option>
-                <option>Storage</option>
-            </select>
-
-            <label>Condition</label>
-            <select required>
-                <option value="">Select condition</option>
-                <option>Like New</option>
-                <option>Good Condition</option>
-                <option>Refurbished</option>
-                <option>For Parts</option>
-            </select>
-
-            <div class="row">
-                <div class="col-6">
-                    <label>Price (₹)</label>
-                    <input type="number" placeholder="0" required>
-                </div>
-                <div class="col-6">
-                    <label>Stock</label>
-                    <input type="number" placeholder="0" required>
-                </div>
+            <div class="col-md-6">
+                <label>Product Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="product_name"
+                    placeholder="e.g. Dell Latitude 5490"
+                    data-validation="required min max"
+                    data-min="3"
+                    data-max="80"
+                >
+                <span id="product_nameError" class="prd-error"></span>
             </div>
 
-            <label>Image URL</label>
-            <input type="text" placeholder="https://...">
+            <div class="col-md-6">
+                <label>Category</label>
+                <select class="form-control" name="category" data-validation="required">
+                    <option value="">Select category</option>
+                    <option>Laptops</option>
+                    <option>Smartphones</option>
+                    <option>Components</option>
+                    <option>Audio</option>
+                    <option>Storage</option>
+                </select>
+                <span id="categoryError" class="prd-error"></span>
+            </div>
 
-            <button type="submit" class="admin-btn admin-btn-primary w-100 justify-content-center">
-                <i class="bi bi-check-lg"></i> Save Product
-            </button>
+            <div class="col-md-6">
+                <label>Condition</label>
+                <select class="form-control" name="condition" data-validation="required">
+                    <option value="">Select condition</option>
+                    <option>Like New</option>
+                    <option>Good Condition</option>
+                    <option>Refurbished</option>
+                    <option>For Parts</option>
+                </select>
+                <span id="conditionError" class="prd-error"></span>
+            </div>
 
-        </form>
+            <div class="col-md-3">
+                <label>Price (₹)</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="price"
+                    placeholder="0"
+                    data-validation="required numeric"
+                >
+                <span id="priceError" class="prd-error"></span>
+            </div>
 
-    </div>
-</div>
+            <div class="col-md-3">
+                <label>Stock</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="stock"
+                    placeholder="0"
+                    data-validation="required numeric"
+                >
+                <span id="stockError" class="prd-error"></span>
+            </div>
 
+            <div class="col-12">
+                <label>Image URL</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="image_url"
+                    placeholder="https://..."
+                    data-validation="required"
+                >
+                <span id="image_urlError" class="prd-error"></span>
+            </div>
 
+        </div>
+
+        <button type="submit" class="admin-btn admin-btn-primary mt-3">
+            <i class="bi bi-check-lg"></i> Save Product
+        </button>
+
+    </form>
+
+</details>
 
 <?php
 $page_content = ob_get_clean();

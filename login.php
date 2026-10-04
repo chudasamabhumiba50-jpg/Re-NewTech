@@ -4,8 +4,13 @@ $page_title = "Login - Re-NewTech";
 
 $message = "";
 
+/* Static User Login */
 $static_email = "abc123@gmail.com";
 $static_password = "12345";
+
+/* Static Admin Login */
+$admin_email = "admin12@gmail.com";
+$admin_password = "admin";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -14,12 +19,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($email) && !empty($password)) {
 
-        if ($email === $static_email && $password === $static_password) {
+        /* Check Admin Login First */
+        if ($email === $admin_email && $password === $admin_password) {
+
+           header("Location: admin/dashboard.php");
+            exit();
+
+        }
+
+        /* Check User Login */
+        elseif ($email === $static_email && $password === $static_password) {
 
             header("Location: account.php");
             exit();
 
-        } else {
+        }
+
+        /* Invalid Login */
+        else {
 
             $message = "Invalid email or password. Please try again.";
 
@@ -35,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ob_start();
 
 ?>
-
 <section class="auth-split">
 
     <!-- LEFT: BRAND PANEL -->

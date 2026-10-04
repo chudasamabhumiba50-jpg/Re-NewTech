@@ -6765,3 +6765,9 @@ body {
     background: var(--teal-dark);
     color: var(--white);
 }
+
+.error,
+.auth-error {
+    font-size: 15px;
+    font-weight: 500;
+}

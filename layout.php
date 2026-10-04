@@ -217,11 +217,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 </div>
 
-    <a href="login.php" class="btn btn-nav-login">
-    <i class="bi bi-box-arrow-in-right me-1"></i>
-    Login
+<a style="background-color: #00a896; color: #ffffff; border-color: #00a896;" href="login.php" class="btn btn-nav-login">
+    <i class="bi bi-box-arrow-in-right me-1"></i> Login
 </a>
-
 
 </div>
 

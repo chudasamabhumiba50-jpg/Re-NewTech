@@ -10,71 +10,138 @@ $reviews = [
     ['id' => 5, 'customer' => 'Karan Desai', 'product' => 'Sony WH-1000XM3', 'rating' => 5, 'text' => 'Exactly as described, great for the price.', 'date' => '28 Jul 2026', 'status' => 'approved']
 ];
 
+// Filter using a plain URL parameter (no JavaScript)
+$active_status = isset($_GET['status']) ? $_GET['status'] : 'all';
+
+$filtered_reviews = [];
+foreach ($reviews as $r) {
+    if ($active_status === 'all' || $r['status'] === $active_status) {
+        $filtered_reviews[] = $r;
+    }
+}
+
+$counts = ['all' => count($reviews), 'pending' => 0, 'approved' => 0, 'rejected' => 0];
+foreach ($reviews as $r) {
+    $counts[$r['status']]++;
+}
+
+$total_rating = 0;
+foreach ($reviews as $r) {
+    $total_rating += $r['rating'];
+}
+$avg_rating = count($reviews) > 0 ? round($total_rating / count($reviews), 1) : 0;
+
 ob_start();
 ?>
 
-<div class="admin-card">
+<!-- SUMMARY STRIP -->
+<div class="row g-3 mb-4">
 
-    <div class="admin-filter-tabs" id="reviewTabs">
-        <button type="button" class="admin-filter-tab active" data-status="all">All</button>
-        <button type="button" class="admin-filter-tab" data-status="pending">Pending</button>
-        <button type="button" class="admin-filter-tab" data-status="approved">Approved</button>
-        <button type="button" class="admin-filter-tab" data-status="rejected">Rejected</button>
+    <div class="col-6 col-md-3">
+        <div class="rev-admin-stat">
+            <strong><?php echo $avg_rating; ?> <i class="bi bi-star-fill"></i></strong>
+            <span>Average Rating</span>
+        </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="admin-table" id="reviewsTable">
-            <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Product</th>
-                    <th>Rating</th>
-                    <th>Review</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th style="width: 130px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($reviews as $r): ?>
-                    <tr data-status="<?php echo $r['status']; ?>">
-                        <td><strong><?php echo htmlspecialchars($r['customer']); ?></strong></td>
-                        <td><?php echo htmlspecialchars($r['product']); ?></td>
-                        <td>
-                            <span class="review-stars">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <i class="bi <?php echo $i <= $r['rating'] ? 'bi-star-fill' : 'bi-star'; ?>"></i>
-                                <?php endfor; ?>
-                            </span>
-                        </td>
-                        <td class="review-text-cell"><?php echo htmlspecialchars($r['text']); ?></td>
-                        <td><?php echo $r['date']; ?></td>
-                        <td>
-                            <span class="admin-pill status-pill <?php echo $r['status'] === 'approved' ? 'pill-delivered' : ($r['status'] === 'rejected' ? 'pill-cancelled' : 'pill-pending'); ?>">
-                                <?php echo ucfirst($r['status']); ?>
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="admin-icon-btn" title="Approve" onclick="setReviewStatus(this, 'approved')">
-                                    <i class="bi bi-check-lg"></i>
-                                </button>
-                                <button type="button" class="admin-icon-btn" title="Reject" onclick="setReviewStatus(this, 'rejected')">
-                                    <i class="bi bi-x-lg"></i>
-                                </button>
-                                <button type="button" class="admin-icon-btn" title="Delete" onclick="deleteReviewRow(this)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div class="col-6 col-md-3">
+        <div class="rev-admin-stat">
+            <strong><?php echo $counts['pending']; ?></strong>
+            <span>Pending Review</span>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <div class="rev-admin-stat">
+            <strong><?php echo $counts['approved']; ?></strong>
+            <span>Approved</span>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+        <div class="rev-admin-stat">
+            <strong><?php echo $counts['rejected']; ?></strong>
+            <span>Rejected</span>
+        </div>
     </div>
 
 </div>
 
+<div class="admin-card">
+
+    <!-- FILTER TABS (plain links, no JS) -->
+    <div class="rev-admin-tabs">
+        <a href="manage_reviews.php" class="rev-admin-tab <?php echo $active_status === 'all' ? 'is-active' : ''; ?>">
+            All <span><?php echo $counts['all']; ?></span>
+        </a>
+        <a href="manage_reviews.php?status=pending" class="rev-admin-tab <?php echo $active_status === 'pending' ? 'is-active' : ''; ?>">
+            Pending <span><?php echo $counts['pending']; ?></span>
+        </a>
+        <a href="manage_reviews.php?status=approved" class="rev-admin-tab <?php echo $active_status === 'approved' ? 'is-active' : ''; ?>">
+            Approved <span><?php echo $counts['approved']; ?></span>
+        </a>
+        <a href="manage_reviews.php?status=rejected" class="rev-admin-tab <?php echo $active_status === 'rejected' ? 'is-active' : ''; ?>">
+            Rejected <span><?php echo $counts['rejected']; ?></span>
+        </a>
+    </div>
+
+    <div class="rev-list">
+
+        <?php if (count($filtered_reviews) === 0): ?>
+            <p class="prd-admin-empty">No reviews found in this category.</p>
+        <?php endif; ?>
+
+        <?php foreach ($filtered_reviews as $r): ?>
+
+            <div class="rev-card">
+
+                <div class="rev-card-top">
+
+                    <div class="rev-card-customer">
+                        <span class="rev-avatar"><?php echo strtoupper(substr($r['customer'], 0, 1)); ?></span>
+                        <div>
+                            <strong><?php echo htmlspecialchars($r['customer']); ?></strong>
+                            <span><?php echo htmlspecialchars($r['product']); ?> &middot; <?php echo $r['date']; ?></span>
+                        </div>
+                    </div>
+
+                    <span class="admin-pill <?php echo $r['status'] === 'approved' ? 'pill-delivered' : ($r['status'] === 'rejected' ? 'pill-cancelled' : 'pill-pending'); ?>">
+                        <?php echo ucfirst($r['status']); ?>
+                    </span>
+
+                </div>
+
+                <div class="rev-stars">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <i class="bi <?php echo $i <= $r['rating'] ? 'bi-star-fill' : 'bi-star'; ?>"></i>
+                    <?php endfor; ?>
+                </div>
+
+                <p class="rev-text"><?php echo htmlspecialchars($r['text']); ?></p>
+
+                <div class="rev-actions">
+
+                    <form method="POST" action="manage_reviews.php" class="rev-action-form">
+                        <input type="hidden" name="review_id" value="<?php echo $r['id']; ?>">
+                        <input type="hidden" name="set_status" value="approved">
+                        <button type="submit" class="admin-btn"><i class="bi bi-check-lg"></i> Approve</button>
+                    </form>
+
+                    <form method="POST" action="manage_reviews.php" class="rev-action-form">
+                        <input type="hidden" name="review_id" value="<?php echo $r['id']; ?>">
+                        <input type="hidden" name="set_status" value="rejected">
+                        <button type="submit" class="admin-btn"><i class="bi bi-x-lg"></i> Reject</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        <?php endforeach; ?>
+
+    </div>
+
+</div>
 
 <?php
 $page_content = ob_get_clean();
