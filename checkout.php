@@ -1,18 +1,6 @@
 <?php
 $page_title = "Checkout - Re-NewTech";
 
-$order_items = [
-    [
-        'name' => 'Refurbished ThinkPad T480 (16GB RAM)',
-        'qty' => 1,
-        'price' => 22500
-    ]
-];
-
-$subtotal = 22500;
-$shipping = 0;
-$grand_total = $subtotal + $shipping;
-
 ob_start();
 ?>
 
@@ -122,30 +110,28 @@ ob_start();
                 <div class="checkout-card">
                     <h5 class="fw-bold text-dark mb-3">Order Summary</h5>
 
-                    <?php foreach($order_items as $item): ?>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold text-dark small">
-                                <?php echo $item['name']; ?>
-                                <span class="text-muted">× <?php echo $item['qty']; ?></span>
-                            </span>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-semibold text-dark small">
+                            Refurbished ThinkPad T480 (16GB RAM)
+                            <span class="text-muted">× 1</span>
+                        </span>
 
-                            <span class="fw-bold text-dark small">
-                                ₹<?php echo number_format($item['price'] * $item['qty']); ?>
-                            </span>
-                        </div>
-                    <?php endforeach; ?>
+                        <span class="fw-bold text-dark small">
+                            ₹22,500
+                        </span>
+                    </div>
 
                     <hr>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Subtotal</span>
-                        <span>₹<?php echo number_format($subtotal); ?></span>
+                        <span>₹22,500</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
                         <span class="text-muted">Shipping</span>
                         <span class="text-success">
-                            <?php echo $shipping == 0 ? 'Free' : '₹' . number_format($shipping); ?>
+                            Free
                         </span>
                     </div>
 
@@ -154,7 +140,7 @@ ob_start();
                     <div class="d-flex justify-content-between mb-4">
                         <span class="fs-5 fw-bold text-dark">Total</span>
                         <span class="fs-4 fw-bold text-success">
-                            ₹<?php echo number_format($grand_total); ?>
+                            ₹22,500
                         </span>
                     </div>
 

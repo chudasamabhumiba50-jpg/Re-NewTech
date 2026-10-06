@@ -2,11 +2,6 @@
 
 $page_title = "Login - Re-NewTech";
 
-$message = "";
-
-/* Static User Login */
-$static_email = "abc123@gmail.com";
-$static_password = "12345";
 
 /* Static Admin Login */
 $admin_email = "admin12@gmail.com";
@@ -26,25 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
 
         }
-
-        /* Check User Login */
-        elseif ($email === $static_email && $password === $static_password) {
-
-            header("Location: account.php");
-            exit();
-
-        }
-
-        /* Invalid Login */
-        else {
-
-            $message = "Invalid email or password. Please try again.";
-
-        }
-
-    } else {
-
-        $message = "Please fill in all fields.";
 
     }
 }
@@ -95,15 +71,6 @@ ob_start();
             <h1 class="auth-title">Login to your account</h1>
             <p class="auth-subtitle">Access your orders, wishlist and saved addresses.</p>
 
-            <?php if ($message): ?>
-
-                <div class="auth-alert">
-                    <i class="bi bi-exclamation-circle"></i>
-                    <?php echo $message; ?>
-                </div>
-
-            <?php endif; ?>
-
             <form action="login.php" method="POST">
 
                 <div class="auth-field">
@@ -128,15 +95,16 @@ ob_start();
                         <a href="forgot_password.php">Forgot Password?</a>
                     </div>
                     <div class="auth-input-group">
-                        <i class="bi bi-lock"></i>
+                       
                         <input
                             type="password"
                             id="password"
                             name="password"
                             class="form-control"
                             placeholder="Enter your password"
-                            data-validation="required"
+                            data-validation="required strongPassword"
                         >
+                       
                     </div>
                     <span id="passwordError" class="auth-error"></span>
                 </div>

@@ -2,25 +2,6 @@
 
 $page_title = "Forgot Password - Re-NewTech";
 
-$message = "";
-$success = false;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $email = $_POST['email'];
-
-    if (!empty($email)) {
-
-        $success = true;
-        $message = "If an account exists for " . htmlspecialchars($email) . ", a reset link has been sent.";
-
-    } else {
-
-        $message = "Please enter your email address.";
-
-    }
-}
-
 ob_start();
 
 ?>
@@ -67,15 +48,6 @@ ob_start();
             <span class="auth-eyebrow">Reset Password</span>
             <h1 class="auth-title">Forgot your password?</h1>
             <p class="auth-subtitle">Enter your email and we'll send you a link to reset it.</p>
-
-            <?php if ($message): ?>
-
-                <div class="auth-alert <?php echo $success ? 'auth-alert-success' : ''; ?>">
-                    <i class="bi <?php echo $success ? 'bi-check-circle' : 'bi-exclamation-circle'; ?>"></i>
-                    <?php echo $message; ?>
-                </div>
-
-            <?php endif; ?>
 
             <form action="forgot_password.php" method="POST">
 

@@ -1,9 +1,3 @@
-<?php
-
-$current_page = basename($_SERVER['PHP_SELF']);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,11 +11,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     >
 
     <title>
-        <?php
-        echo isset($page_title)
-            ? htmlspecialchars($page_title)
-            : 'Re-NewTech | Give Technology Another Life';
-        ?>
+        Re-NewTech | Give Technology Another Life
     </title>
         <!--javascript-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -104,7 +94,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                     <a
                         href="index.php"
-                        class="nav-link <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>"
+                        class="nav-link"
                     >
                         Home
                     </a>
@@ -116,7 +106,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                     <a
                         href="products.php"
-                        class="nav-link <?php echo ($current_page == 'products.php' || $current_page == 'product_details.php') ? 'active' : ''; ?>"
+                        class="nav-link"
                     >
                         Re-NewTech
                     </a>
@@ -133,7 +123,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                     <a
                         href="how_it_works.php"
-                        class="nav-link <?php echo ($current_page == 'how_it_works.php') ? 'active' : ''; ?>"
+                        class="nav-link"
                     >
                         How It Works
                     </a>
@@ -150,11 +140,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <i class="bi bi-search"></i>
     </a>
 
-    <a href="wishlist.php" class="nav-icon-button <?php echo ($current_page == 'wishlist.php') ? 'active-icon' : ''; ?>" title="Wishlist">
+    <a href="wishlist.php" class="nav-icon-button" title="Wishlist">
         <i class="bi bi-heart"></i>
     </a>
 
-    <a href="cart.php" class="nav-icon-button <?php echo ($current_page == 'cart.php' || $current_page == 'checkout.php') ? 'active-icon' : ''; ?>" title="Cart">
+    <a href="cart.php" class="nav-icon-button" title="Cart">
         <i class="bi bi-bag"></i>
     </a>
 
@@ -163,7 +153,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <button
         type="button"
         id="accountDropdown"
-        class="nav-icon-button account-toggle-btn <?php echo ($current_page == 'profile.php' || $current_page == 'orders.php') ? 'active-icon' : ''; ?>"
+        class="nav-icon-button account-toggle-btn"
         data-bs-toggle="dropdown"
         aria-expanded="false"
         title="Account"
@@ -234,16 +224,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
      DYNAMIC CONTENT
 ===================================================== -->
 
-<main class="<?php echo isset($main_class) ? $main_class : ''; ?>">
+<main>
 
-    <?php
-
-    if (isset($page_content))
-    {
-        echo $page_content;
-    }
-
-    ?>
+    <?php echo $page_content; ?>
 
 </main>
 
@@ -426,7 +409,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="footer-bottom">
 
             <p>
-                © <?php echo date('Y'); ?> Re-NewTech.
+                © 2026 Re-NewTech.
                 All rights reserved.
             </p>
 
