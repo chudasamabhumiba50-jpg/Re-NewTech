@@ -1,6 +1,101 @@
+
 <?php
 
 ob_start();
+
+$message = "";
+$message_type = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    require_once "db_config.php";
+
+    $fullname = trim($_POST['fullname'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirmPassword'] ?? '';
+
+    if (
+        $fullname == '' ||
+        $email == '' ||
+        $password == '' ||
+        $confirmPassword == ''
+    ) {
+        $message = "Please fill all required fields.";
+        $message_type = "error";
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        $message = "Please enter a valid email address.";
+        $message_type = "error";
+
+    } elseif (strlen($fullname) < 3 || strlen($fullname) > 50) {
+
+        $message = "Full name must be between 3 and 50 characters.";
+        $message_type = "error";
+
+    } elseif (
+        strlen($password) < 8 ||
+        strlen($password) > 25
+    ) {
+
+        $message = "Password must be between 8 and 25 characters.";
+        $message_type = "error";
+
+    } elseif ($password !== $confirmPassword) {
+
+        $message = "Password and Confirm Password do not match.";
+        $message_type = "error";
+
+    } elseif (!isset($_POST['terms'])) {
+
+        $message = "Please accept the Terms & Privacy Policy.";
+        $message_type = "error";
+
+    } else {
+
+        $hashed_password = password_hash(
+            $password,
+            PASSWORD_DEFAULT
+        );
+
+        try {
+
+            $query = "INSERT INTO registration
+                      (fullname, email, password)
+                      VALUES (?, ?, ?)";
+
+            $stmt = mysqli_prepare($con, $query);
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sss",
+                $fullname,
+                $email,
+                $hashed_password
+            );
+
+            if (mysqli_stmt_execute($stmt)) {
+
+                $message = "Registration successful! You can now login.";
+                $message_type = "success";
+
+            }
+
+            mysqli_stmt_close($stmt);
+
+        } catch (mysqli_sql_exception $e) {
+
+            if ($e->getCode() == 1062) {
+                $message = "This email is already registered.";
+            } else {
+                $message = "Registration failed. Please try again.";
+            }
+
+            $message_type = "error";
+        }
+    }
+}
 
 ?>
 
@@ -65,6 +160,16 @@ ob_start();
             <p class="auth-subtitle">
                 Join Re-NewTech for eco-friendly electronics.
             </p>
+            
+<?php if ($message != "") { ?>
+
+    <p class="<?php echo $message_type == 'success'
+        ? 'text-success'
+        : 'text-danger'; ?>">
+        <?php echo htmlspecialchars($message); ?>
+    </p>
+
+<?php } ?>
 
 
             <form action="register.php" method="POST">

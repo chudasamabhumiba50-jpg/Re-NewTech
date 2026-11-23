@@ -1,61 +1,137 @@
+
 <?php
+
+session_start();
 
 $page_title = "Login - Re-NewTech";
 
+$message = "";
 
-/* Static Admin Login */
+/* Database Connection */
+require_once "db_config.php";
+
+/* Admin Login */
 $admin_email = "admin12@gmail.com";
 $admin_password = "admin";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    if (!empty($email) && !empty($password)) {
+    if ($email == "" || $password == "") {
 
-        /* Check Admin Login First */
-        if ($email === $admin_email && $password === $admin_password) {
+        $message = "Please enter email and password.";
 
-           header("Location: admin/dashboard.php");
+    } else {
+
+        /* Check Admin Login */
+        if (
+            $email === $admin_email &&
+            $password === $admin_password
+        ) {
+
+            session_regenerate_id(true);
+
+            $_SESSION['admin_logged_in'] = true;
+
+            header("Location: admin/dashboard.php");
             exit();
 
-        }
+        } else {
 
+            /* Check Registered User */
+            $query = "SELECT id, fullname, email, password
+                      FROM registration
+                      WHERE email = ?
+                      LIMIT 1";
+
+          $stmt = mysqli_prepare($con, $query);
+
+            mysqli_stmt_bind_param($stmt, "s", $email);
+
+            mysqli_stmt_execute($stmt);
+
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($user = mysqli_fetch_assoc($result)) {
+
+                /* Verify Hashed Password */
+                if (password_verify($password, $user['password'])) {
+
+                    session_regenerate_id(true);
+
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['fullname'] = $user['fullname'];
+                    $_SESSION['email'] = $user['email'];
+
+                    mysqli_stmt_close($stmt);
+                    mysqli_close($con);
+
+                    header("Location: account.php");
+                    exit();
+
+                } else {
+
+                    $message = "Invalid email or password.";
+
+                }
+
+            } else {
+
+                $message = "Invalid email or password.";
+
+            }
+
+            mysqli_stmt_close($stmt);
+        }
     }
 }
 
 ob_start();
 
 ?>
+
 <section class="auth-split">
 
     <!-- LEFT: BRAND PANEL -->
     <div class="auth-brand-panel">
 
         <a href="index.php" class="auth-brand-logo">
-            <span class="auth-brand-symbol"><i class="bi bi-recycle"></i></span>
+            <span class="auth-brand-symbol">
+                <i class="bi bi-recycle"></i>
+            </span>
             Re-NewTech
         </a>
 
         <div class="auth-brand-content">
+
             <h2>Give technology another life.</h2>
-            <p>Log in to track your orders, manage your wishlist, and keep browsing certified renewed electronics.</p>
+
+            <p>
+                Log in to track your orders, manage your wishlist,
+                and keep browsing certified renewed electronics.
+            </p>
 
             <div class="auth-brand-stats">
+
                 <div class="auth-brand-stat">
                     <strong>5,000+</strong>
                     <span>Devices Renewed</span>
                 </div>
+
                 <div class="auth-brand-stat">
                     <strong>120+ Tons</strong>
                     <span>CO2 Saved</span>
                 </div>
+
                 <div class="auth-brand-stat">
                     <strong>6 Months</strong>
                     <span>Warranty Included</span>
                 </div>
+
             </div>
+
         </div>
 
         <div class="auth-brand-glow"></div>
@@ -68,15 +144,33 @@ ob_start();
         <div class="auth-form-wrap">
 
             <span class="auth-eyebrow">Welcome Back</span>
-            <h1 class="auth-title">Login to your account</h1>
-            <p class="auth-subtitle">Access your orders, wishlist and saved addresses.</p>
+
+            <h1 class="auth-title">
+                Login to your account
+            </h1>
+
+            <p class="auth-subtitle">
+                Access your orders, wishlist and saved addresses.
+            </p>
+
+            <?php if ($message != "") { ?>
+
+                <p class="text-danger">
+                    <?php echo htmlspecialchars($message); ?>
+                </p>
+
+            <?php } ?>
 
             <form action="login.php" method="POST">
 
                 <div class="auth-field">
+
                     <label for="email">Email Address</label>
+
                     <div class="auth-input-group">
+
                         <i class="bi bi-envelope"></i>
+
                         <input
                             type="email"
                             id="email"
@@ -84,45 +178,80 @@ ob_start();
                             class="form-control"
                             placeholder="you@example.com"
                             data-validation="required email"
+                            required
                         >
+
                     </div>
+
                     <span id="emailError" class="auth-error"></span>
+
                 </div>
 
                 <div class="auth-field">
+
                     <div class="auth-label-row">
+
                         <label for="password">Password</label>
-                        <a href="forgot_password.php">Forgot Password?</a>
+
+                        <a href="forgot_password.php">
+                            Forgot Password?
+                        </a>
+
                     </div>
+
                     <div class="auth-input-group">
-                       
+
                         <input
                             type="password"
                             id="password"
                             name="password"
                             class="form-control"
                             placeholder="Enter your password"
-                            data-validation="required strongPassword"
+                            data-validation="required"
+                            required
                         >
-                       
+
                     </div>
+
                     <span id="passwordError" class="auth-error"></span>
+
                 </div>
 
                 <div class="auth-options">
+
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                        <label class="form-check-label" for="remember">Remember me</label>
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="remember"
+                            name="remember"
+                        >
+
+                        <label
+                            class="form-check-label"
+                            for="remember"
+                        >
+                            Remember me
+                        </label>
+
                     </div>
+
                 </div>
 
                 <button type="submit" class="auth-submit">
-                    Login <i class="bi bi-arrow-right"></i>
+                    Login
+                    <i class="bi bi-arrow-right"></i>
                 </button>
 
                 <div class="auth-bottom-text">
+
                     Don't have an account?
-                    <a href="register.php">Create an account</a>
+
+                    <a href="register.php">
+                        Create an account
+                    </a>
+
                 </div>
 
             </form>

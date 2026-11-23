@@ -1,5 +1,54 @@
+
 <?php
 $page_title = "Contact Us - Re-NewTech";
+
+require_once "db_config.php";
+
+$success_message = "";
+$error_message = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $fullname = trim($_POST["fullname"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $message = trim($_POST["message"] ?? "");
+
+    if ($fullname === "" || $email === "" || $message === "") {
+        $error_message = "Please fill in all fields.";
+    } elseif (strlen($fullname) < 3 || strlen($fullname) > 50) {
+        $error_message = "Name must be between 3 and 50 characters.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Please enter a valid email address.";
+    } elseif (strlen($message) < 10 || strlen($message) > 500) {
+        $error_message = "Message must be between 10 and 500 characters.";
+    } else {
+        $query = "INSERT INTO contact_messages (fullname, email, message)
+                  VALUES (?, ?, ?)";
+
+        $stmt = mysqli_prepare($con, $query);
+
+        if ($stmt) {
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sss",
+                $fullname,
+                $email,
+                $message
+            );
+
+            if (mysqli_stmt_execute($stmt)) {
+                $success_message = "Your message has been sent successfully!";
+            } else {
+                $error_message = "Unable to send your message. Please try again.";
+            }
+
+            mysqli_stmt_close($stmt);
+        } else {
+            $error_message = "Something went wrong. Please try again.";
+        }
+    }
+}
+
 ob_start();
 ?>
 
@@ -92,14 +141,28 @@ ob_start();
                 <h5 class="contact-form-title">Send Us a Message</h5>
                 <p class="contact-form-subtitle">Fill the form below and we'll get back to you shortly.</p>
 
-                <form>
+                <?php if ($success_message !== "") { ?>
+                    <p class="text-success">
+                        <?php echo htmlspecialchars($success_message); ?>
+                    </p>
+                <?php } ?>
+
+                <?php if ($error_message !== "") { ?>
+                    <p class="text-danger">
+                        <?php echo htmlspecialchars($error_message); ?>
+                    </p>
+                <?php } ?>
+
+                <form action="contact.php" method="POST">
 
                     <div class="contact-field">
-                        <label>Your Name</label>
+                        <label for="fullname">Your Name</label>
                         <input
                             type="text"
+                            id="fullname"
                             name="fullname"
                             placeholder="Enter your full name"
+                            value="<?php echo htmlspecialchars($_POST['fullname'] ?? ''); ?>"
                             data-validation="required alpha min max"
                             data-min="3"
                             data-max="50"
@@ -108,26 +171,29 @@ ob_start();
                     </div>
 
                     <div class="contact-field">
-                        <label>Email Address</label>
+                        <label for="email">Email Address</label>
                         <input
                             type="email"
+                            id="email"
                             name="email"
                             placeholder="you@example.com"
+                            value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
                             data-validation="required email"
                         >
                         <span id="emailError" class="contact-error"></span>
                     </div>
 
                     <div class="contact-field">
-                        <label>Message</label>
+                        <label for="message">Message</label>
                         <textarea
+                            id="message"
                             name="message"
                             rows="4"
                             placeholder="How can we help you?"
                             data-validation="required min max"
                             data-min="10"
                             data-max="500"
-                        ></textarea>
+                        ><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
                         <span id="messageError" class="contact-error"></span>
                     </div>
 

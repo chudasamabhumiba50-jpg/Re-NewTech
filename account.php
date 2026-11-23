@@ -1,5 +1,51 @@
+
 <?php
+session_start();
+
 $page_title = "My Account - Re-NewTech";
+
+// Check login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Database connection
+require_once "db_config.php";
+
+// Get logged-in user ID
+$user_id = $_SESSION['user_id'];
+
+// Fetch user details from registration table
+$query = "SELECT fullname, email, created_at
+          FROM registration
+          WHERE id = ?
+          LIMIT 1";
+
+$stmt = mysqli_prepare($con, $query);
+
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+mysqli_stmt_close($stmt);
+
+if (!$user) {
+    session_unset();
+    session_destroy();
+
+    header("Location: login.php");
+    exit();
+}
+
+// Store user details
+$fullname = $user['fullname'];
+$email = $user['email'];
+$initials = strtoupper(substr(trim($fullname), 0, 1));
+$member_since = date("M Y", strtotime($user['created_at']));
+
 ob_start();
 ?>
 
@@ -11,11 +57,11 @@ ob_start();
             <div class="acc-banner-row">
 
                 <div class="acc-banner-left">
-                    <div class="acc-avatar">AB</div>
+                    <div class="acc-avatar"><?php echo htmlspecialchars($initials); ?></div>
                     <div>
                         <span class="acc-banner-label">Welcome back</span>
-                        <h1 class="acc-banner-name">abc</h1>
-                        <span class="acc-banner-email"><i class="bi bi-envelope"></i> abc123@gmail.com</span>
+                        <h1 class="acc-banner-name"><?php echo htmlspecialchars($fullname); ?></h1>
+                        <span class="acc-banner-email"><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($email); ?></span>
                     </div>
                 </div>
 
@@ -24,7 +70,7 @@ ob_start();
                         <i class="bi bi-patch-check-fill"></i>
                         <div>
                             <strong>Member Since</strong>
-                            <span>Sep 2026</span>
+                            <span><?php echo htmlspecialchars($member_since); ?></span>
                         </div>
                     </div>
                 </div>

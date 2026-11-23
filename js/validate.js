@@ -186,4 +186,11 @@ $(document).ready(function () {
       e.preventDefault();
     }
   });
+  if (rules.includes("url") && value !== "") {
+    const urlPattern = /^(https?:\/\/)([\w-]+(\.[\w-]+)+)(\/[\w\-._~:/?#[\]@!$&'()+,;=%])?$/;
+
+    if (!urlPattern.test(value)) {
+        errorMessage = "Please enter a valid URL.";
+    }
+}
 });

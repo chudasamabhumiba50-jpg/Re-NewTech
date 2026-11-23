@@ -1,9 +1,3 @@
-<?php
-
-$current_admin_page = basename($_SERVER['PHP_SELF']);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,13 +10,7 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        <?php
-        echo isset($page_title)
-            ? htmlspecialchars($page_title)
-            : 'Admin Panel - Re-NewTech';
-        ?>
-    </title>
+    <title>Admin Panel - Re-NewTech</title>
 
     <!-- Bootstrap -->
     <link
@@ -76,27 +64,27 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
 
         <nav class="admin-nav">
 
-            <a href="dashboard.php" class="admin-nav-link <?php echo ($current_admin_page == 'dashboard.php') ? 'active' : ''; ?>">
+            <a href="dashboard.php" class="admin-nav-link">
                 <i class="bi bi-grid-1x2-fill"></i> Dashboard
             </a>
 
-            <a href="manage_products.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_products.php') ? 'active' : ''; ?>">
+            <a href="manage_products.php" class="admin-nav-link">
                 <i class="bi bi-box-seam-fill"></i> Products
             </a>
 
-            <a href="manage_orders.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_orders.php') ? 'active' : ''; ?>">
+            <a href="manage_orders.php" class="admin-nav-link">
                 <i class="bi bi-bag-check-fill"></i> Orders
             </a>
 
-            <a href="manage_users.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_users.php') ? 'active' : ''; ?>">
+            <a href="manage_users.php" class="admin-nav-link">
                 <i class="bi bi-people-fill"></i> Users
             </a>
 
-            <a href="manage_reviews.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_reviews.php') ? 'active' : ''; ?>">
+            <a href="manage_reviews.php" class="admin-nav-link">
                 <i class="bi bi-star-fill"></i> Reviews
             </a>
 
-            <a href="manage_messages.php" class="admin-nav-link <?php echo ($current_admin_page == 'manage_messages.php') ? 'active' : ''; ?>">
+            <a href="manage_messages.php" class="admin-nav-link">
                 <i class="bi bi-chat-dots-fill"></i> Messages
             </a>
 
@@ -126,7 +114,7 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
             </label>
 
             <h5 class="admin-topbar-title">
-                <?php echo isset($page_heading) ? $page_heading : 'Dashboard'; ?>
+                Dashboard
             </h5>
 
             <div class="admin-topbar-actions">
@@ -141,12 +129,9 @@ $current_admin_page = basename($_SERVER['PHP_SELF']);
         <main class="admin-content">
 
             <?php
-
-            if (isset($page_content))
-            {
+            if (isset($page_content)) {
                 echo $page_content;
             }
-
             ?>
 
         </main>

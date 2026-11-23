@@ -2,30 +2,6 @@
 $page_title = "Manage Orders - Re-NewTech Admin";
 $page_heading = "Orders";
 
-$orders = [
-    ['id' => 'RNT10245', 'customer' => 'Ravi Patel', 'date' => '18 Sep 2026', 'payment' => 'UPI', 'total' => 22500, 'status' => 'delivered'],
-    ['id' => 'RNT10198', 'customer' => 'Sneha Mehta', 'date' => '02 Sep 2026', 'payment' => 'Card', 'total' => 14999, 'status' => 'shipped'],
-    ['id' => 'RNT10122', 'customer' => 'Amit Shah', 'date' => '21 Aug 2026', 'payment' => 'COD', 'total' => 900, 'status' => 'cancelled'],
-    ['id' => 'RNT10087', 'customer' => 'Neha Joshi', 'date' => '05 Aug 2026', 'payment' => 'Net Banking', 'total' => 6200, 'status' => 'pending'],
-    ['id' => 'RNT10061', 'customer' => 'Karan Desai', 'date' => '29 Jul 2026', 'payment' => 'COD', 'total' => 2400, 'status' => 'pending']
-];
-
-// Filter orders by status using a plain URL parameter (no JavaScript)
-$active_status = isset($_GET['status']) ? $_GET['status'] : 'all';
-
-$filtered_orders = [];
-foreach ($orders as $o) {
-    if ($active_status === 'all' || $o['status'] === $active_status) {
-        $filtered_orders[] = $o;
-    }
-}
-
-// Counts for each tab
-$counts = ['all' => count($orders), 'pending' => 0, 'shipped' => 0, 'delivered' => 0, 'cancelled' => 0];
-foreach ($orders as $o) {
-    $counts[$o['status']]++;
-}
-
 ob_start();
 ?>
 
@@ -34,28 +10,28 @@ ob_start();
 
     <div class="col-6 col-md-3">
         <div class="ord-admin-stat">
-            <strong><?php echo $counts['pending']; ?></strong>
+            <strong>2</strong>
             <span>Pending</span>
         </div>
     </div>
 
     <div class="col-6 col-md-3">
         <div class="ord-admin-stat">
-            <strong><?php echo $counts['shipped']; ?></strong>
+            <strong>1</strong>
             <span>Shipped</span>
         </div>
     </div>
 
     <div class="col-6 col-md-3">
         <div class="ord-admin-stat">
-            <strong><?php echo $counts['delivered']; ?></strong>
+            <strong>1</strong>
             <span>Delivered</span>
         </div>
     </div>
 
     <div class="col-6 col-md-3">
         <div class="ord-admin-stat">
-            <strong><?php echo $counts['cancelled']; ?></strong>
+            <strong>1</strong>
             <span>Cancelled</span>
         </div>
     </div>
@@ -64,27 +40,35 @@ ob_start();
 
 <div class="admin-card">
 
-    <!-- FILTER TABS (plain links, no JS) -->
+    <!-- FILTER TABS -->
     <div class="ord-admin-tabs">
-        <a href="manage_orders.php" class="ord-admin-tab <?php echo $active_status === 'all' ? 'is-active' : ''; ?>">
-            All <span><?php echo $counts['all']; ?></span>
+
+        <a href="manage_orders.php" class="ord-admin-tab is-active">
+            All <span>5</span>
         </a>
-        <a href="manage_orders.php?status=pending" class="ord-admin-tab <?php echo $active_status === 'pending' ? 'is-active' : ''; ?>">
-            Pending <span><?php echo $counts['pending']; ?></span>
+
+        <a href="manage_orders.php?status=pending" class="ord-admin-tab">
+            Pending <span>2</span>
         </a>
-        <a href="manage_orders.php?status=shipped" class="ord-admin-tab <?php echo $active_status === 'shipped' ? 'is-active' : ''; ?>">
-            Shipped <span><?php echo $counts['shipped']; ?></span>
+
+        <a href="manage_orders.php?status=shipped" class="ord-admin-tab">
+            Shipped <span>1</span>
         </a>
-        <a href="manage_orders.php?status=delivered" class="ord-admin-tab <?php echo $active_status === 'delivered' ? 'is-active' : ''; ?>">
-            Delivered <span><?php echo $counts['delivered']; ?></span>
+
+        <a href="manage_orders.php?status=delivered" class="ord-admin-tab">
+            Delivered <span>1</span>
         </a>
-        <a href="manage_orders.php?status=cancelled" class="ord-admin-tab <?php echo $active_status === 'cancelled' ? 'is-active' : ''; ?>">
-            Cancelled <span><?php echo $counts['cancelled']; ?></span>
+
+        <a href="manage_orders.php?status=cancelled" class="ord-admin-tab">
+            Cancelled <span>1</span>
         </a>
+
     </div>
 
     <div class="table-responsive">
+
         <table class="admin-table">
+
             <thead>
                 <tr>
                     <th>Order ID</th>
@@ -96,44 +80,158 @@ ob_start();
                     <th>Update Status</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (count($filtered_orders) === 0): ?>
-                    <tr>
-                        <td colspan="7" class="ord-admin-empty">No orders found in this category.</td>
-                    </tr>
-                <?php endif; ?>
 
-                <?php foreach ($filtered_orders as $o): ?>
-                    <tr>
-                        <td><strong>#<?php echo $o['id']; ?></strong></td>
-                        <td><?php echo $o['customer']; ?></td>
-                        <td><?php echo $o['date']; ?></td>
-                        <td><?php echo $o['payment']; ?></td>
-                        <td>₹<?php echo number_format($o['total']); ?></td>
-                        <td>
-                            <span class="admin-pill pill-<?php echo $o['status']; ?>">
-                                <?php echo ucfirst($o['status']); ?>
-                            </span>
-                        </td>
-                        <td>
-                            <form method="POST" action="manage_orders.php" class="ord-status-form">
-                                <input type="hidden" name="order_id" value="<?php echo $o['id']; ?>">
-                                <select name="new_status" class="ord-status-select">
-                                    <?php foreach (['pending', 'shipped', 'delivered', 'cancelled'] as $st): ?>
-                                        <option value="<?php echo $st; ?>" <?php echo $st === $o['status'] ? 'selected' : ''; ?>>
-                                            <?php echo ucfirst($st); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <button type="submit" class="admin-icon-btn" title="Save">
-                                    <i class="bi bi-check-lg"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+            <tbody>
+
+                <tr>
+                    <td><strong>#RNT10245</strong></td>
+                    <td>Ravi Patel</td>
+                    <td>18 Sep 2026</td>
+                    <td>UPI</td>
+                    <td>₹22,500</td>
+                    <td>
+                        <span class="admin-pill pill-delivered">
+                            Delivered
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="manage_orders.php" class="ord-status-form">
+                            <input type="hidden" name="order_id" value="RNT10245">
+
+                            <select name="new_status" class="ord-status-select">
+                                <option value="pending">Pending</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered" selected>Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="admin-icon-btn" title="Save">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>#RNT10198</strong></td>
+                    <td>Sneha Mehta</td>
+                    <td>02 Sep 2026</td>
+                    <td>Card</td>
+                    <td>₹14,999</td>
+                    <td>
+                        <span class="admin-pill pill-shipped">
+                            Shipped
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="manage_orders.php" class="ord-status-form">
+                            <input type="hidden" name="order_id" value="RNT10198">
+
+                            <select name="new_status" class="ord-status-select">
+                                <option value="pending">Pending</option>
+                                <option value="shipped" selected>Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="admin-icon-btn" title="Save">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>#RNT10122</strong></td>
+                    <td>Amit Shah</td>
+                    <td>21 Aug 2026</td>
+                    <td>COD</td>
+                    <td>₹900</td>
+                    <td>
+                        <span class="admin-pill pill-cancelled">
+                            Cancelled
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="manage_orders.php" class="ord-status-form">
+                            <input type="hidden" name="order_id" value="RNT10122">
+
+                            <select name="new_status" class="ord-status-select">
+                                <option value="pending">Pending</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled" selected>Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="admin-icon-btn" title="Save">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>#RNT10087</strong></td>
+                    <td>Neha Joshi</td>
+                    <td>05 Aug 2026</td>
+                    <td>Net Banking</td>
+                    <td>₹6,200</td>
+                    <td>
+                        <span class="admin-pill pill-pending">
+                            Pending
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="manage_orders.php" class="ord-status-form">
+                            <input type="hidden" name="order_id" value="RNT10087">
+
+                            <select name="new_status" class="ord-status-select">
+                                <option value="pending" selected>Pending</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="admin-icon-btn" title="Save">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>#RNT10061</strong></td>
+                    <td>Karan Desai</td>
+                    <td>29 Jul 2026</td>
+                    <td>COD</td>
+                    <td>₹2,400</td>
+                    <td>
+                        <span class="admin-pill pill-pending">
+                            Pending
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST" action="manage_orders.php" class="ord-status-form">
+                            <input type="hidden" name="order_id" value="RNT10061">
+
+                            <select name="new_status" class="ord-status-select">
+                                <option value="pending" selected>Pending</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                            <button type="submit" class="admin-icon-btn" title="Save">
+                                <i class="bi bi-check-lg"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
             </tbody>
+
         </table>
+
     </div>
 
 </div>

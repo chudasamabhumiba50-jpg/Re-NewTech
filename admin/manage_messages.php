@@ -1,30 +1,7 @@
+
 <?php
 $page_title = "Messages - Re-NewTech Admin";
 $page_heading = "Messages";
-
-$messages = [
-    ['id' => 1, 'name' => 'Ravi Patel', 'email' => 'ravi.patel@example.com', 'subject' => 'Warranty claim', 'text' => 'My laptop battery is draining faster than expected. How can I claim the 6 month warranty?', 'date' => '26 Sep 2026', 'read' => false],
-    ['id' => 2, 'name' => 'Sneha Mehta', 'email' => 'sneha.mehta@example.com', 'subject' => 'Bulk order enquiry', 'text' => 'We are a small office and want to buy 10 refurbished monitors. Do you offer a bulk discount?', 'date' => '24 Sep 2026', 'read' => false],
-    ['id' => 3, 'name' => 'Amit Shah', 'email' => 'amit.shah@example.com', 'subject' => 'Delivery delay', 'text' => 'My order was supposed to arrive yesterday. Can you share the tracking details?', 'date' => '20 Sep 2026', 'read' => true],
-    ['id' => 4, 'name' => 'Karan Desai', 'email' => 'karan.desai@example.com', 'subject' => 'Sell my old phone', 'text' => 'Can I sell my old phone to Re-NewTech? Please tell me the process.', 'date' => '15 Sep 2026', 'read' => true]
-];
-
-$unread_count = 0;
-foreach ($messages as $m) {
-    if (!$m['read']) {
-        $unread_count++;
-    }
-}
-
-$selected_id = isset($_GET['id']) ? (int)$_GET['id'] : $messages[0]['id'];
-
-$selected_message = $messages[0];
-foreach ($messages as $m) {
-    if ($m['id'] === $selected_id) {
-        $selected_message = $m;
-        break;
-    }
-}
 
 ob_start();
 ?>
@@ -36,30 +13,75 @@ ob_start();
 
         <div class="msg-list-head">
             <h6>Inbox</h6>
-            <span class="msg-unread-chip"><?php echo $unread_count; ?> Unread</span>
+            <span class="msg-unread-chip">2 Unread</span>
         </div>
 
         <div class="msg-list">
 
-            <?php foreach ($messages as $m): ?>
+            <a href="manage_messages.php?id=1"
+               class="msg-list-item is-active is-unread">
 
-                <a href="manage_messages.php?id=<?php echo $m['id']; ?>"
-                   class="msg-list-item <?php echo $m['id'] === $selected_id ? 'is-active' : ''; ?> <?php echo !$m['read'] ? 'is-unread' : ''; ?>">
+                <div class="msg-avatar">R</div>
 
-                    <div class="msg-avatar"><?php echo strtoupper(substr($m['name'], 0, 1)); ?></div>
+                <div class="msg-item-body">
+                    <div class="msg-item-head">
+                        <strong>Ravi Patel</strong>
+                        <span>26 Sep 2026</span>
+                    </div>
+                    <span class="msg-item-subject">Warranty claim</span>
+                    <p>My laptop battery is draining faster than expected. How can I claim the 6 month warranty?</p>
+                </div>
+
+            </a>
+
+            <a href="manage_messages.php?id=2"
+               class="msg-list-item is-unread">
 
                     <div class="msg-item-body">
-                        <div class="msg-item-head">
-                            <strong><?php echo htmlspecialchars($m['name']); ?></strong>
-                            <span><?php echo $m['date']; ?></span>
-                        </div>
-                        <span class="msg-item-subject"><?php echo htmlspecialchars($m['subject']); ?></span>
-                        <p><?php echo htmlspecialchars($m['text']); ?></p>
+                <div class="msg-avatar">S</div>
+
+                <div class="msg-item-body">
+                    <div class="msg-item-head">
+                        <strong>Sneha Mehta</strong>
+                        <span>24 Sep 2026</span>
                     </div>
+                    <span class="msg-item-subject">Bulk order enquiry</span>
+                    <p>We are a small office and want to buy 10 refurbished monitors. Do you offer a bulk discount?</p>
+                </div>
 
-                </a>
+            </a>
 
-            <?php endforeach; ?>
+            <a href="manage_messages.php?id=3"
+               class="msg-list-item">
+
+                <div class="msg-avatar">A</div>
+
+                <div class="msg-item-body">
+                    <div class="msg-item-head">
+                        <strong>Amit Shah</strong>
+                        <span>20 Sep 2026</span>
+                    </div>
+                    <span class="msg-item-subject">Delivery delay</span>
+                    <p>My order was supposed to arrive yesterday. Can you share the tracking details?</p>
+                </div>
+
+            </a>
+
+            <a href="manage_messages.php?id=4"
+               class="msg-list-item">
+
+                <div class="msg-avatar">K</div>
+
+                <div class="msg-item-body">
+                    <div class="msg-item-head">
+                        <strong>Karan Desai</strong>
+                        <span>15 Sep 2026</span>
+                    </div>
+                    <span class="msg-item-subject">Sell my old phone</span>
+                    <p>Can I sell my old phone to Re-NewTech? Please tell me the process.</p>
+                </div>
+
+            </a>
 
         </div>
 
@@ -70,26 +92,26 @@ ob_start();
 
         <div class="msg-detail-head">
 
-            <div class="msg-detail-avatar"><?php echo strtoupper(substr($selected_message['name'], 0, 1)); ?></div>
+            <div class="msg-detail-avatar">R</div>
 
             <div class="msg-detail-meta">
-                <strong><?php echo htmlspecialchars($selected_message['name']); ?></strong>
-                <span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars($selected_message['email']); ?></span>
+                <strong>Ravi Patel</strong>
+                <span><i class="bi bi-envelope"></i> ravi.patel@example.com</span>
             </div>
 
-            <span class="msg-detail-date"><?php echo $selected_message['date']; ?></span>
+            <span class="msg-detail-date">26 Sep 2026</span>
 
         </div>
 
-        <h5 class="msg-detail-subject"><?php echo htmlspecialchars($selected_message['subject']); ?></h5>
+        <h5 class="msg-detail-subject">Warranty claim</h5>
 
-        <p class="msg-detail-text"><?php echo htmlspecialchars($selected_message['text']); ?></p>
+        <p class="msg-detail-text">My laptop battery is draining faster than expected. How can I claim the 6 month warranty?</p>
 
         <div class="msg-detail-divider"></div>
 
-        <h6 class="msg-reply-title"><i class="bi bi-reply-fill"></i> Reply to <?php echo htmlspecialchars($selected_message['name']); ?></h6>
+        <h6 class="msg-reply-title"><i class="bi bi-reply-fill"></i> Reply to Ravi Patel</h6>
 
-        <form method="POST" action="manage_messages.php?id=<?php echo $selected_message['id']; ?>">
+        <form method="POST" action="manage_messages.php?id=1">
 
             <div class="msg-reply-field">
                 <label>Subject</label>
@@ -97,7 +119,7 @@ ob_start();
                     type="text"
                     class="form-control"
                     name="reply_subject"
-                    value="Re: <?php echo htmlspecialchars($selected_message['subject']); ?>"
+                    value="Re: Warranty claim"
                     data-validation="required min max"
                     data-min="3"
                     data-max="100"
@@ -123,7 +145,8 @@ ob_start();
                 <button type="submit" class="admin-btn admin-btn-primary">
                     <i class="bi bi-send-fill"></i> Send Reply
                 </button>
-                <a href="mailto:<?php echo htmlspecialchars($selected_message['email']); ?>" class="admin-btn">
+
+                <a href="mailto:ravi.patel@example.com" class="admin-btn">
                     <i class="bi bi-envelope"></i> Open in Mail App
                 </a>
             </div>
