@@ -37,7 +37,6 @@ ob_start();
             <a href="manage_messages.php?id=2"
                class="msg-list-item is-unread">
 
-                    <div class="msg-item-body">
                 <div class="msg-avatar">S</div>
 
                 <div class="msg-item-body">

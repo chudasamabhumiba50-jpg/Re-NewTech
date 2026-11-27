@@ -41,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
 
             /* Check Registered User */
-            $query = "SELECT id, fullname, email, password
-                      FROM registration
-                      WHERE email = ?
-                      LIMIT 1";
+           $query = "SELECT id, fullname, email, password, status
+          FROM registration
+          WHERE email = ?
+          LIMIT 1";
 
           $stmt = mysqli_prepare($con, $query);
 
@@ -57,21 +57,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user = mysqli_fetch_assoc($result)) {
 
                 /* Verify Hashed Password */
-                if (password_verify($password, $user['password'])) {
+               if (password_verify($password, $user['password'])) {
 
-                    session_regenerate_id(true);
+    // Check whether email is verified
+    if ($user['status'] != 'active') {
 
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['fullname'] = $user['fullname'];
-                    $_SESSION['email'] = $user['email'];
+        $message = "Please verify your email before login.";
 
-                    mysqli_stmt_close($stmt);
-                    mysqli_close($con);
+    } else {
 
-                    header("Location: account.php");
-                    exit();
+        session_regenerate_id(true);
 
-                } else {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['fullname'] = $user['fullname'];
+        $_SESSION['email'] = $user['email'];
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($con);
+
+        header("Location: account.php");
+        exit();
+
+    }
+
+} else {
 
                     $message = "Invalid email or password.";
 
